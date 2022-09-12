@@ -1,0 +1,19 @@
+In the struct data type, we physically group different or same types of data types into a one data type. These different or same data types can be accessed by the usage of a single pointer variable to the struct data type or the name of the struct data type. The address of the pointer variable and the struct data type are same. When we try to access the address of a data type in the struct, we use the addresss of a single pointer variable to the struct data type. To print and reach the address of the first element in the struct data type, we can use the statement printf("%p\n",&(my.username)).When we compare the resulting address of the username variable in the struct data type, we will see that this address is same with the address of the struct data type. So, we can access the first variable's address in the struct via using the address of the struct data type. When we try to reach the other variables in the struct data type, we should specifically state the address of them. However, if we do not use the struct data type, the program will use and modify their addresses seperately for all of the local variables. Using the struct data type change the behavior of the program in terms of accessing and modifying the first element of the struct. If we use the struct data type, we can access and modify the first variable's address in the struct by accessing and modifying the address of the struct data type's name.
+
+ADDRESS OUTPUT EXAMPLES 
+
+BY USING THE STRUCT DATA TYPE
+1-) The address of the char username[100] : 0x7ffee2558998
+2-) The address of the check_pin: 0x7ffee25589fc
+3-) The address of the local_secret_pin: 0x7ffee2558a00
+4-) The address of the 'my' struct type: 0x7ffee2558998
+
+//For the first case, the first and the fourth addresses are same but the other addresses are different from the first address and the fourth address. 
+
+BY NOT USING THE STRUCT DATA TYPE:
+
+1-) The address of the char username[100]: 0x7ffeef7159a0
+2-) The address of the check_pin: 0x7ffeef715998
+3-) The address of the local_secret_pin: 0x7ffeef715994
+
+//For the second case, all of the addresses are different from each other.  

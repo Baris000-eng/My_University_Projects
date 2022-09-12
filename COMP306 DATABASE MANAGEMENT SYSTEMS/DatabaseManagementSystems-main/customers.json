@@ -1,0 +1,3 @@
+{"_id":{"$oid":"628b5b465e99d0e002f0f584"},"name":"Barış Kaplan","zipcode":"99503","avg_rating":8.3}
+{"_id":{"$oid":"628b5b465e99d0e002f0f586"},"name":"Adam S.","zipcode":"33126","avg_rating":4.9,"last_order":{"year":2019,"tags":["book","fiction"]}}
+{"_id":{"$oid":"628b5b465e99d0e002f0f585"},"name":"Jake G.","zipcode":"90025","avg_rating":3.5,"last_order":{"year":2009}}

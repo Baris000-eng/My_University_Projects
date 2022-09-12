@@ -1,0 +1,215 @@
+Department:
+   PK:
+    - ID
+   ID:
+    - VARCHAR(20)
+    - NOT NULL
+   name:
+    - VARCHAR(40)
+    - NOT NULL
+    
+FacultyMember:
+  PK:
+    - ID
+  FK:
+    Department:
+      - DepID
+      - ID
+  ID:
+    - INT	
+    - NOT NULL
+  Name:
+    - VARCHAR(20)
+    - NOT NULL
+  Surname:
+    - VARCHAR(20)
+    - NOT NULL
+  DepID:
+    - VARCHAR(20)	
+    - NOT NULL
+  Username:
+    - VARCHAR(20) 
+    - NOT NULL
+  Password:
+    - VARCHAR(40)	
+    - NOT NULL
+
+student:
+  PK:
+    - StudentID
+  FK:
+    FacultyMember:
+      - AdvisorID
+      - ID
+  StudentID:
+    - INT	
+    - NOT NULL
+  Name:
+    - VARCHAR(30)
+    - NOT NULL
+  Surname:
+    - VARCHAR(30)
+    - NOT NULL
+  GPA:
+    - DOUBLE
+    - NOT NULL
+  Start_year:
+    - INT			
+    - NOT NULL
+  country:
+    - VARCHAR(30)
+    - NOT NULL
+  city:
+    - VARCHAR(30)	
+    - NOT NULL
+  AdvisorID:
+    - INT
+    - NOT NULL
+  Username:
+    - VARCHAR(20) 
+    - NOT NULL
+  Password:
+    - VARCHAR(40)	
+    - NOT NULL
+
+major:
+  PK:
+    - Code
+  FK:
+    Department:
+     - DepID
+     - ID
+  Code:
+    - CHAR(4)
+    - NOT NULL
+  Name:
+    - VARCHAR(40)
+    - NOT NULL
+  DepID:
+    - VARCHAR(20)	
+    - NOT NULL
+
+
+admin:
+  PK:
+    - id
+  id:
+    - INT
+    - NOT NULL
+  username:
+    - VARCHAR(40)
+    - NOT NULL
+  password:
+    - VARCHAR(40)
+    - NOT NULL
+
+
+Classroom:
+  PK:
+    - ClassroomID
+  ClassroomID:
+    - INT
+    - NOT NULL
+  Building:
+    - VARCHAR(30)
+    - NOT NULL
+  Capacity:
+    - INT
+    - NOT NULL
+    
+Course:
+  PK:
+    - code
+  FK:
+    FacultyMember:
+      - teacherID
+      - ID
+    Major:
+      - majorCode
+      - Code
+    Classroom:
+      - ClassroomID
+      - ClassroomID
+      
+  Duration:
+    - INT 
+    - NOT NULL
+  Credit:
+    - INT	
+    - NOT NULL
+  Code:
+    - VARCHAR(10)	
+    - NOT NULL
+  ClassroomID:
+    - INT
+    - NOT NULL
+  Semester:
+    - VARCHAR(20)
+    - NOT NULL
+  Year:
+    - INT
+    - NOT NULL
+  majorCode:
+    - CHAR(4)
+    - NOT NULL
+  teacherID:
+    - INT
+    - NOT NULL
+
+
+EnrollIn:
+  PK:
+    - StudentID
+    - CourseCode
+  FK:
+    Course:
+      - CourseCode
+      - Code
+    Student:
+      - StudentID
+      - StudentID
+      
+  StudentID:
+    - INT	
+    - NOT NULL
+  
+  CourseCode:
+    - VARCHAR(10)
+    - NOT NULL
+  Grade:
+    - VARCHAR(20)
+    
+Has:
+  PK:
+    - StudentID
+    - MajorCode
+  FK:
+    Major:
+      - MajorCode
+      - Code
+    Student:
+      - StudentID
+      - StudentID
+      
+  StudentID:
+    - INT	
+    - NOT NULL
+  MajorCode:
+    - VARCHAR(4)
+    - NOT NULL
+  
+StartTime:
+  PK:
+    - CourseCode
+    - StartTime
+  FK:
+    Course:
+      - CourseCode
+      - Code
+      
+  StartTime:
+    - VARCHAR(20)	
+    - NOT NULL
+  CourseCode:
+    - VARCHAR(10)
+    - NOT NULL

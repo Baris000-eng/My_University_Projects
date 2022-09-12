@@ -1,0 +1,83 @@
+Player me 687.1317580207746 2
+mygame
+EnchantedSphere 359 412
+0 0 1 1
+Obstacle SimpleObstacle 60 43
+Obstacle SimpleObstacle 184 163
+Obstacle SimpleObstacle 122 203
+Obstacle SimpleObstacle 1045 203
+Obstacle SimpleObstacle 60 323
+Obstacle SimpleObstacle 184 243
+Obstacle SimpleObstacle 1044 283
+Obstacle SimpleObstacle 430 243
+Obstacle SimpleObstacle 184 203
+Obstacle SimpleObstacle 1045 43
+Obstacle SimpleObstacle 614 83
+Obstacle SimpleObstacle 982 43
+Obstacle SimpleObstacle 1166 283
+Obstacle SimpleObstacle 430 163
+Obstacle SimpleObstacle 983 283
+Obstacle SimpleObstacle 798 83
+Obstacle SimpleObstacle 368 203
+Obstacle SimpleObstacle 798 403
+Obstacle SimpleObstacle 983 203
+Obstacle SimpleObstacle 1045 323
+Obstacle SimpleObstacle 184 403
+Obstacle SimpleObstacle 185 43
+Obstacle SimpleObstacle 61 203
+Obstacle SimpleObstacle 1104 283
+Obstacle SimpleObstacle 244 203
+Obstacle SimpleObstacle 122 83
+Obstacle SimpleObstacle 0 83
+Obstacle SimpleObstacle 307 123
+Obstacle SimpleObstacle 920 243
+Obstacle SimpleObstacle 799 123
+Obstacle SimpleObstacle 614 123
+Obstacle SimpleObstacle 60 243
+Obstacle SimpleObstacle 1105 163
+Obstacle SimpleObstacle 920 123
+Obstacle SimpleObstacle 982 363
+Obstacle SimpleObstacle 60 163
+Obstacle SimpleObstacle 123 123
+Obstacle SimpleObstacle 920 403
+Obstacle SimpleObstacle 920 163
+Obstacle SimpleObstacle 1 243
+Obstacle SimpleObstacle 860 203
+Obstacle SimpleObstacle 920 323
+Obstacle SimpleObstacle 798 243
+Obstacle SimpleObstacle 0 43
+Obstacle SimpleObstacle 122 43
+Obstacle SimpleObstacle 244 83
+Obstacle SimpleObstacle 306 83
+Obstacle SimpleObstacle 369 123
+Obstacle SimpleObstacle 861 283
+Obstacle SimpleObstacle 430 403
+Obstacle SimpleObstacle 921 43
+Obstacle SimpleObstacle 1166 323
+Obstacle SimpleObstacle 1044 83
+Obstacle SimpleObstacle 368 43
+Obstacle SimpleObstacle 306 43
+Obstacle SimpleObstacle 1166 83
+Obstacle SimpleObstacle 244 163
+Obstacle SimpleObstacle 982 123
+Obstacle FirmObstacle 1166 403 3
+Obstacle FirmObstacle 614 363 2
+Obstacle FirmObstacle 1044 243 8
+Obstacle FirmObstacle 614 163 2
+Obstacle FirmObstacle 674 403 1
+Obstacle FirmObstacle 798 203 2
+Obstacle FirmObstacle 920 83 6
+Obstacle FirmObstacle 1166 243 7
+Obstacle FirmObstacle 369 363 2
+Obstacle ExplosiveObstacle 184 83
+Obstacle ExplosiveObstacle 0 283
+Obstacle ExplosiveObstacle 124 165
+Obstacle ExplosiveObstacle 0 203
+Obstacle ExplosiveObstacle 62 85
+Obstacle GiftObstacle 736 43
+Obstacle GiftObstacle 674 243
+Obstacle GiftObstacle 244 283
+Obstacle GiftObstacle 736 123
+Obstacle GiftObstacle 920 363
+Obstacle GiftObstacle 244 243
+Obstacle GiftObstacle 490 203

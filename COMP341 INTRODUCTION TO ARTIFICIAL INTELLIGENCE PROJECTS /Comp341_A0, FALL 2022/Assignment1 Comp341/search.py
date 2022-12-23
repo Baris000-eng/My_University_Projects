@@ -170,7 +170,7 @@ def uniformCostSearch(problem):
             while isPrioEmp is False:  # whenever the priority queue is not empty.
                 sit, moves_of_agents = struct_of_prio_que.pop()  # pop moves and states from that queue
                 if sit not in trav: #if the location is not traversed
-                    trav.append(sit) #add the location to
+                    trav.append(sit) #add this non-traversed location to the list keeping all non-traversed locations
                     objectiveStateReached = problem.isGoalState(
                         sit)  # defining a boolean variable which keeps whether we reached the goal state
                     if objectiveStateReached is not True: #if we do not reach the aimed state
@@ -189,13 +189,13 @@ def uniformCostSearch(problem):
                             # actions
                             merged = chain(moves_of_agents, mov_lst)  # merge moves_of_agents with move list
                             upd_mov = list(merged)  # convert to a list
-                            upd_cst = cst_of_mov + tot_cst  # alter the cost
+                            upd_cst = cst_of_mov + tot_cst  # alter total cost of actions by the cost of a move
                             init_elem = (subseq, upd_mov)
                             sec_elem = upd_cst
                             struct_of_prio_que.push(init_elem,
                                                     sec_elem)  # push the successor , moves, and cost to priority queue
                 else:
-                    trv_lst = [sit, trav]
+                    trv_lst = [sit, trav] #do nothing, we may also write pass here
 
 
 def nullHeuristic(state, problem=None):

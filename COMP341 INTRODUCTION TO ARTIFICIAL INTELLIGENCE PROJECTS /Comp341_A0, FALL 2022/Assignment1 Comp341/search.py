@@ -103,9 +103,9 @@ def basedOnBrdthOrDpth(sNm, prob):
         print("- !!! Empty structure !!! -")
         raise Exception("The structure instance is empty ")
     else:
-        while emp is not True:
-            stack_elm = struct_of_search_algo.pop()
-            locOfAg, actOfAg = stack_elm
+        while emp is not True: # while the stack structure or queue structure is not empty
+            stack_elm = struct_of_search_algo.pop() # pop from data structure
+            locOfAg, actOfAg = stack_elm # extract move and location
             if prob.isGoalState(locOfAg) is not True:
                 ddd = 2
                 zzz = 2
@@ -114,18 +114,18 @@ def basedOnBrdthOrDpth(sNm, prob):
             if locOfAg in visNod:
                 fff = 3
             else:
-                visNod.append(locOfAg)
-                sucList = prob.getSuccessors(locOfAg)
-                for ndd in sucList:
+                visNod.append(locOfAg) # append to visited node list
+                sucList = prob.getSuccessors(locOfAg) #obtain the successors
+                for ndd in sucList: #for all elements in successor list
                     import itertools  # for using itertools library
                     moveToLst = list()
-                    secElm = ndd[1]
+                    secElm = ndd[1] #action of one successor
                     moveToLst.append(secElm)
                     concatenation = itertools.chain(actOfAg, moveToLst)  # for chaining agent actions with move list.
                     renewed_move_lst = list(concatenation)
-                    iniElm = ndd[0]
+                    iniElm = ndd[0] #location of one successor
                     pushed_elem = (iniElm, renewed_move_lst)
-                    struct_of_search_algo.push(pushed_elem)
+                    struct_of_search_algo.push(pushed_elem) 
 
 
 def depthFirstSearch(problem):

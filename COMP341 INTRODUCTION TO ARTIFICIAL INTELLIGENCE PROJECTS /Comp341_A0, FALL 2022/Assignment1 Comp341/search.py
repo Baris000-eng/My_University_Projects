@@ -93,15 +93,16 @@ def basedOnBrdthOrDpth(sNm, prob):
             from util import Stack
             struct_of_search_algo = Stack()  # construct a stack by using util.py.
 
-    visNod = list()
+    visNod = list() #initializing the list which represent the visite noded
     init_state = prob.getStartState()  # extraction of the initial problem state
     all_acts = list()
     pshed = (init_state, all_acts)
-    struct_of_search_algo.push(pshed)
+    struct_of_search_algo.push(pshed) #pushing the tuple which is made of the initial problem state and the initialized list of all actions
+    #to the created data structure, which is stack or queue
     emp = struct_of_search_algo.isEmpty()
     if emp is True:  # checks whether the created data structure is empty.
-        print("- !!! Empty structure !!! -")
-        raise Exception("The structure instance is empty ")
+        print("- !!! Empty structure !!! -") # displaying related message about emptiness of the data structure
+        raise Exception("The structure instance is empty ")# raising a related exception
     else:
         while emp is not True: # while the stack structure or queue structure is not empty
             stack_elm = struct_of_search_algo.pop() # pop from data structure
@@ -111,21 +112,21 @@ def basedOnBrdthOrDpth(sNm, prob):
                 zzz = 2 #do nothing
             else:  # if we have not reached the aimed state yet!
                 return actOfAg  # return the agent actions
-            if locOfAg in visNod:
-                fff = 3
-            else:
+            if locOfAg in visNod: #if the current state is visited.
+                fff = 3 #do nothing, in other words pass
+            else: #if the current state is not visited yet
                 visNod.append(locOfAg) # append to visited node list
-                sucList = prob.getSuccessors(locOfAg) #obtain the successors
+                sucList = prob.getSuccessors(locOfAg) #obtain the successors by using getSuccessors
                 for ndd in sucList: #for all elements in successor list
                     import itertools  # for using itertools library
                     moveToLst = list()
-                    secElm = ndd[1] #action of one successor
-                    moveToLst.append(secElm)
-                    concatenation = itertools.chain(actOfAg, moveToLst)  # for chaining agent actions with move list.
+                    secElm = ndd[1] #action
+                    moveToLst.append(secElm) # obtaining the action as a list
+                    concatenation = itertools.chain(actOfAg, moveToLst)  # for chaining agent actions with the actions in these iterations
                     renewed_move_lst = list(concatenation)
-                    iniElm = ndd[0] #location of one successor
-                    pushed_elem = (iniElm, renewed_move_lst)
-                    struct_of_search_algo.push(pushed_elem) 
+                    iniElm = ndd[0] #representing new state
+                    pushed_elem = (iniElm, renewed_move_lst) #creating a tuple where the first element is new state and the second element is the updated list of actions
+                    struct_of_search_algo.push(pushed_elem) #push the created tuple to the initially created data structure which is queue or stack.
 
 
 def depthFirstSearch(problem):
@@ -149,12 +150,12 @@ def breadthFirstSearch(problem):
 
 def uniformCostSearch(problem):
     # print("*****Start of the uniform cost searching *****")
-    from util import PriorityQueue
-    struct_of_prio_que = PriorityQueue()
+    from util import PriorityQueue #importing the PriorityQueue from the utilpy
+    struct_of_prio_que = PriorityQueue() #creating an empty priority queue
     if struct_of_prio_que is None:  # controls if the priority queue object is null
         print("Null priority queue error has been thrown !!")  # related printed message
         raise Exception("********* The priority queue instance is null !!!!!!!!! *******")  # related exception
-    else:
+    else: #if priority queue is not none
         all_moves_of_the_agent = list()
         ini_st = problem.getStartState()  # obtaining the initial state of the problem
         trav = list()

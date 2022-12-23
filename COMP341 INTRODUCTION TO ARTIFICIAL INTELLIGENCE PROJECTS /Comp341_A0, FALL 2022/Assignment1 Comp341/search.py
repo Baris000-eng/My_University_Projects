@@ -106,9 +106,9 @@ def basedOnBrdthOrDpth(sNm, prob):
         while emp is not True: # while the stack structure or queue structure is not empty
             stack_elm = struct_of_search_algo.pop() # pop from data structure
             locOfAg, actOfAg = stack_elm # extract move and location
-            if prob.isGoalState(locOfAg) is not True:
-                ddd = 2
-                zzz = 2
+            if prob.isGoalState(locOfAg) is not True: #if we have not reached the aimed state
+                ddd = 2 #do nothing
+                zzz = 2 #do nothing
             else:  # if we have not reached the aimed state yet!
                 return actOfAg  # return the agent actions
             if locOfAg in visNod:
@@ -168,19 +168,19 @@ def uniformCostSearch(problem):
         else:
             while isPrioEmp is False:  # whenever the priority queue is not empty.
                 sit, moves_of_agents = struct_of_prio_que.pop()  # pop moves and states from that queue
-                if sit not in trav:
-                    trav.append(sit)
+                if sit not in trav: #if the location is not traversed
+                    trav.append(sit) #add the location to
                     objectiveStateReached = problem.isGoalState(
                         sit)  # defining a boolean variable which keeps whether we reached the goal state
-                    if objectiveStateReached is not True:
-                        aab = 2
+                    if objectiveStateReached is not True: #if we do not reach the aimed state
+                        aab = 2 #do nothing
                     else:  # if we have already reached the state which is the objective.
                         return moves_of_agents  # return the agent moves
                     subseq_lst = problem.getSuccessors(sit)  # extract successor elements
-                    for subseq, mov, cst_of_mov in subseq_lst:
-                        if subseq in trav:
-                            my_small_lst = [subseq, trav]
-                        else:
+                    for subseq, mov, cst_of_mov in subseq_lst: #for all subsequent, move, and the cost of move in the list of subsequents
+                        if subseq in trav: #if subsequent is in traversed
+                            my_small_lst = [subseq, trav] #do nothing
+                        else: #if subsequent is not traverse yet
                             mov_lst = list()  # initialize a list called mov_lst
                             mov_lst.append(mov)  # append moves to the move list
                             from itertools import chain  # use the chain library

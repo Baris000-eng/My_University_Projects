@@ -907,6 +907,11 @@ def betterEvaluationFunction(currentGameState: GameState):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
+    
+    
+    #############I have used almost same logic with the normal evaluation function I have used in question1. The things I changed are only the weight of the 
+    ############closeness to food. I have increased the value of the numerator of the reciprocal including the distance to food in its denominator. I do 
+    ######this increase so that the evaulation function have better value in case the distance of agent to food decreases.
     if currentGameState is None:
         print("the current game state is detected as null !!!")
         raise Exception("the current game state is detected as null !!!")

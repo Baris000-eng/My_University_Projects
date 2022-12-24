@@ -571,9 +571,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             print("An invalid parameter of the function called lrg small is detected !!")
             raise Exception("one of the parameters of the function called lrg small is found as null !")
         total_number_of_pacmans = par_of_sit.getNumAgents()
-        wins = par_of_sit.isWin()
+        wins = par_of_sit.isWin() #defining the winning case boolean variable
         value_of_deepness = self.depth
-        loses = par_of_sit.isLose()
+        loses = par_of_sit.isLose() #defining the losing case boolean variable
         deepness_array = list()
         deepness_array.append(total_number_of_pacmans)
         deepness_array.append(value_of_deepness)
@@ -597,6 +597,8 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
     def bigger_val(self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag):
         updated_dpth = (1 + param_of_dpth)
+        
+        #####################################Null checks done for ensuring that the code works at any possible case ################################
         if (val_of_beta is None) \
                 or \
                 (val_of_alpha is None) \
@@ -612,10 +614,16 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 (self.depth is None):
             print("one of the parameters of the bigger val function is found as null !")
             raise Exception("one of the parameters of the bigger val function is found as null !")
+        #####################################Null checks done for ensuring that the code works at any possible case ################################
+        
+        
         from math import inf
-        all_possible_vertices = inf * -1
-        all_feasible_mvs = param_of_sit.getLegalActions(param_of_ag)
-        moveLen = len(all_feasible_mvs)
+        all_possible_vertices = inf * -1 #initializing the value to negative infinity as we did in lec.
+        all_feasible_mvs = param_of_sit.getLegalActions(param_of_ag) #obtaining all possible legal actions by using getLegalActions() function#
+        moveLen = len(all_feasible_mvs)#defining the length of the all possible legal actions #############
+        
+        
+        #####################################Null and empty checks done for ensuring that the code works at any possible case ################################
         if all_feasible_mvs is None:
             print("the list of all feasible moves is null !")
             raise Exception("the list of all feasible moves is null !")
@@ -624,10 +632,13 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             raise Exception("invalid length for the list of all feasible moves !")
         elif moveLen == 0:
             print("the list of all possible moves is detected as empty !!")
+       #####################################Null and empty checks done for ensuring that the code works at any possible case ################################
 
-        for mvs in all_feasible_mvs:
-            renewed_situation = param_of_sit.generateSuccessor(param_of_ag, mvs)
-            total_amount_of_agents = param_of_sit.getNumAgents()
+    
+        
+        for mvs in all_feasible_mvs: #going all along the legal moves
+            renewed_situation = param_of_sit.generateSuccessor(param_of_ag, mvs) #generate successor
+            total_amount_of_agents = param_of_sit.getNumAgents() #obtain the agent number
             pacman_location = updated_dpth % total_amount_of_agents
             # self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag
             largerOrSmaller = self.lrgSmall(
@@ -728,17 +739,17 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
             move, consequence = move_result_tuples #dividing a tuple in the array into action and value where the action is first and value is second
             diff = larger_val_or_smaller_val - consequence #it will be used for checking the relation between the value and the minimax value
             if diff < 0: #if the minimax value is smaller than value
-                pass
+                pass #do nothing, in other words, pass
             elif diff > 0:#if the minimax value is larger than value
-                pass
+                pass #do nothing, in other words, pass
             else: #if the minimax value is equal to the value
-                string_equality_condition = (
+                string_equality_condition = ( #defining a boolean variable which will keep whether the move is equal to the 'Stop' regardless of the case of the 'Stop'.
                     move.lower().__eq__(
                         my_custom_stop_string.lower()
                     )
                 )
                 if string_equality_condition == True: #if the move is equal to the 'stop' action regardless of its case
-                    pass #pass that case
+                    pass #do not do anything and pass that case
                 return move #if the move is not equal to stop, than return that move
 
     @staticmethod
@@ -747,6 +758,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         return num1
 
     def summation_over_expected_probabilities(self, d, a, s):
+        ##############Null checks done for making sure that the algorithm works at any possible case made with or without any faulties############
         if (d is None) \
                 or \
                 (a is None) \
@@ -758,12 +770,18 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 (self.index is None):
             print("one of the parameters of the function called expected value sum is none !")
             raise Exception("one of the parameters of the function called expected value sum is none !")
-        updated_depth_val = 1 + d
-        all_possible_vertices = 0
-        all_feasible_moves = s.getLegalActions(a)
-        total_number_of_pacmans = s.getNumAgents()
-        index_value_of_pacman = updated_depth_val % total_number_of_pacmans
+       ##############Null checks done for making sure that the algorithm works at any possible case made with or without any faulties############
+    
+    
+        updated_depth_val = 1 + d #for covering all possible values from 0 to depth for the pacman index
+        all_possible_vertices = 0 #initialization of the expected value over all possible vertices
+        all_feasible_moves = s.getLegalActions(a) #obtaining the legal actions
+        total_number_of_pacmans = s.getNumAgents() #obtaining the number of agents
+        index_value_of_pacman = updated_depth_val % total_number_of_pacmans #obtaining the index of pacman
 
+        
+        
+        ###########################null checks and empty checks for all_feasible_moves##################################################
         if all_feasible_moves is None:
             print("The list of all feasible moves is null !!!")
             raise Exception("The list of all feasible moves is null !!!")
@@ -773,17 +791,22 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
             raise Exception("invalid length of the list of all feasible moves !")
         elif feasible_move_list_length == 0:
             print("Empty list of all feasible moves !")
+        ###########################null checks and empty checks for all_feasible_moves##################################################
 
-        for feasible_move in all_feasible_moves:
-            newState = s.generateSuccessor(a, feasible_move)
-            probability_of_unit_move = float(1 / feasible_move_list_length)
-            large_value_or_small_value = self.largeOrSmall(
+        for feasible_move in all_feasible_moves: #going all along the legal actions
+            newState = s.generateSuccessor(a, feasible_move) #generating the successor
+            probability_of_unit_move = float(1 / feasible_move_list_length) #probability to be multiplied with minimax value
+            
+            #####################################obtaining the minimax value #####################################
+            large_value_or_small_value = self.largeOrSmall( 
                 dp=updated_depth_val,
                 st=newState,
                 ag=index_value_of_pacman,
-            )
-            weighted_value = probability_of_unit_move * large_value_or_small_value
-            all_possible_vertices = self.add_weighted_values(all_possible_vertices, weighted_value)
+            ) #minimax value
+            #####################################obtaining the minimax value #####################################
+            
+            weighted_value = probability_of_unit_move * large_value_or_small_value #multiplying the minimax value with the probability and obtaining the weighted version.
+            all_possible_vertices = self.add_weighted_values(all_possible_vertices, weighted_value) #adding the weighted value to total expected value
 
         return all_possible_vertices
 
@@ -932,6 +955,8 @@ def betterEvaluationFunction(currentGameState: GameState):
     #############I have used almost same logic with the normal evaluation function I have used in question1. The things I changed are only the weight of the 
     ############closeness to food. I have increased the value of the numerator of the reciprocal including the distance to food in its denominator. I do 
     ######this increase so that the evaulation function have better value in case the distance of agent to food decreases.
+    #########I have also kept in attention that the pacman is in the aim of eating foods, being away from ghosts and eating capsules. I have used these
+    ######features or negatives of them or reciprocals of them by considering their relation with the total value of evaluation function. 
     if currentGameState is None:
         print("the current game state is detected as null !!!")
         raise Exception("the current game state is detected as null !!!")

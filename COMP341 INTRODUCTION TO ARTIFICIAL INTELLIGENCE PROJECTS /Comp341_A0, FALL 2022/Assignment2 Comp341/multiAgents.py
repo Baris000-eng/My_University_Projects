@@ -78,6 +78,7 @@ class ReflexAgent(Agent):
         newGhostStates = successorGameState.getGhostStates()
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
+        #########null checks for ensuring the code work in all cases of the calls of this function##############################
         if (successorGameState is None) or \
                 (newPos is None) or \
                 (newFood is None) or \
@@ -85,32 +86,38 @@ class ReflexAgent(Agent):
                 (newScaredTimes is None) or \
                 (currentGameState is None) or \
                 (action is None):
-            print("invalid game state, pacman position, food, ghost state, scared times , or action !")
-            raise Exception("invalid game state, pacman position, food, ghost state, scared times, or action !")
+            print("invalid game state, pacman position, food, ghost state, scared times , or action !") #print a related message stating one of the parameters is none
+            raise Exception("invalid game state, pacman position, food, ghost state, scared times, or action !") #raising an exception stating that. one of the parameters is invalid!
         if len(newScaredTimes) < 0 or \
                 len(newScaredTimes) == 0:
             print("invalid length value for new scared times list or empty new scared times list !!!")
+            #########null checks for ensuring the code work in all cases of the calls of this function##############################
 
-        coordinateDifferencesKeeper = list()
-        listVersionOfNewFood = newFood.asList()
-        fdAmount = len(listVersionOfNewFood)
+        coordinateDifferencesKeeper = list() # initializing the list which will keep the distances to foods (initialization done by list() call 
+        listVersionOfNewFood = newFood.asList() # using the. asList function to get the list of foods
+        fdAmount = len(listVersionOfNewFood) #obtaining the length of the list of foods with len() function and assigning this to fdAmount
         for lisElem in listVersionOfNewFood:
-            my_custom_heuristic_value = manhattanDistance(newPos, lisElem)
-            coordinateDifferencesKeeper.append(my_custom_heuristic_value)
+            my_custom_heuristic_value = manhattanDistance(newPos, lisElem) #calculating the distance to food by using the manhattan distance heuristic, thus the. manhattan distance function
+            coordinateDifferencesKeeper.append(my_custom_heuristic_value) #appending the found heuristic to the list which is supposed to keep the distances to the foods
 
+            
+       ############### if the internal python implementation of len is changed somehow by the python's writer or if the parameters are changed#####
         if len(coordinateDifferencesKeeper) < 0 or \
                 (coordinateDifferencesKeeper is None):
             print("invalid distance keeper !")
+            ############### if the internal python implementation of len is changed somehow by the python's writer or if the parameters are changed#####
 
+            
+            
         closness_to_grid = 0
         lengthOfDiffKeeper = len(coordinateDifferencesKeeper)
         firstCondForAtLeastTwo = (lengthOfDiffKeeper > 2)
         secondCondForAtLeastTwo = (lengthOfDiffKeeper == 2)
-        resultingCondForAtLeastTwo = (firstCondForAtLeastTwo or secondCondForAtLeastTwo)
+        resultingCondForAtLeastTwo = (firstCondForAtLeastTwo or secondCondForAtLeastTwo) #specifying whether there is more than 1 element in the list of distances to foods
 
         atLeastTwo = (resultingCondForAtLeastTwo)
         lessThanZero = (lengthOfDiffKeeper < 0)
-        equalToOne = (lengthOfDiffKeeper == 1)
+        equalToOne = (lengthOfDiffKeeper == 1) # specifying whether there is 1 element in the list of distances to foods
         equalToZero = (lengthOfDiffKeeper == 0)
         initial_index_value = 0
 
@@ -118,55 +125,69 @@ class ReflexAgent(Agent):
             print("null list encountered right now !!!!!!!!!!")
             raise Exception("null list encountered right now !!!!!!!!!!")
 
-        if atLeastTwo:
-            closness_to_grid = coordinateDifferencesKeeper[initial_index_value]
+        if atLeastTwo: #if there is more than 1 food near
+            closness_to_grid = coordinateDifferencesKeeper[initial_index_value] #assigning the variable which will keep the closeness to food metric to the first element of the list which keeps the distances to foods
             my_custom_range = range(0, lengthOfDiffKeeper)
-            for w in my_custom_range:
-                cond1 = (coordinateDifferencesKeeper[w] < closness_to_grid)
+            for w in my_custom_range: #going all along the list which keeps the distances to foods
+                cond1 = (coordinateDifferencesKeeper[w] < closness_to_grid) 
                 cond2 = (coordinateDifferencesKeeper[w] == closness_to_grid)
                 cndt = cond1 or cond2
-                if cndt:
-                    closness_to_grid = coordinateDifferencesKeeper[w]
-        elif lessThanZero:
+                if cndt:#if there is a smaller or equal distance (compared to the closeness_grid variable) in the list of distances to foods 
+                    closness_to_grid = coordinateDifferencesKeeper[w] #update the closeness grid
+        elif lessThanZero: #for covering all possible cases if the python implementer changes the implementation somehow
             print("invalid length value encountered currently !")
             raise Exception("invalid length value encountered currently !")
-        elif equalToZero:
+        elif equalToZero: #for covering empty list case
             print("empty coordinate difference list found currently!")
-        elif equalToOne:
-            closness_to_grid = coordinateDifferencesKeeper[initial_index_value]
+        elif equalToOne: #if there is only 1 element in the food distances list
+            closness_to_grid = coordinateDifferencesKeeper[initial_index_value] #assign that element to the closeness_grid variable
 
-        adversary_array = list()
-        for adversary_state in newGhostStates:
-            adversaryPos = adversary_state.getPosition()
-            heur = manhattanDistance(newPos, adversaryPos)
-            adversary_array.append(heur)
+        adversary_array = list() #initializing the list which will keep the distances to adversaries
+        for adversary_state in newGhostStates: # going along all of the ghost states
+            adversaryPos = adversary_state.getPosition() #obtaining the position of the adversary by using getPosition() function
+            heur = manhattanDistance(newPos, adversaryPos) #calculating the heuristic by using the manhattan distance heuristic, thus the manhattanDistance() function
+            adversary_array.append(heur) #appending the calculated heuristic to the list which keeps all the distances to ghosts
 
         lengthOfAdv = len(adversary_array)
-        if adversary_array is None:
+        if adversary_array is None: #null check for adversary array
             print("null list of adversaries !!!!!!!!!!")
             raise Exception("null list of adversaries !!!!!!!!!!")
-        elif lengthOfAdv < 0:
+        elif lengthOfAdv < 0: 
             print("invalid length value found for adversary list !")
             raise Exception("invalid length value found for adversary list !")
-        elif lengthOfAdv == 0:
+        elif lengthOfAdv == 0: #empty check for adversary length
             print("empty list of adversary detected !")
-        else:
-            adversary_closeness_metric = adversary_array[initial_index_value]
+        else: #if the list of distances to ghosts is not empty or is not none
+            adversary_closeness_metric = adversary_array[initial_index_value] #get the first element of the list of the distances to ghosts
             my_range = range(0, lengthOfAdv)
-            for y in my_range:
-                first_condition = (adversary_array[y] < adversary_closeness_metric)
-                second_condition = (adversary_array == adversary_closeness_metric)
+            for y in my_range: #going all along the list of distances to ghosts
+                first_condition = (adversary_array[y] < adversary_closeness_metric) 
+                second_condition = (adversary_array[y] == adversary_closeness_metric)
                 resulting_condition = (first_condition or second_condition)
-                if resulting_condition:
-                    adversary_closeness_metric = adversary_array[y]
+                if resulting_condition:#if there is a distance smaller than or equal (within the list of distances to ghosts) 
+                    # to the adversary_closeness_metric variable(closeness to ghost).
+                    adversary_closeness_metric = adversary_array[y] #update the closeness to ghost
 
-        subseq_value_of_score = successorGameState.getScore()
+                    
+                    
+                    
+        ######################I have created this part by considering the main agent goals, which are being away from the ghosts, being near to the foods,
+        #######consuming the capsules to eat the ghosts, and increasing the game score#######################
+        #######Since the distance to ghost is should be directly proportional to the evaluation function value, and distance to food is inversely proportional to 
+        #######the evaluation function value, I have used the distance to food in the denominator part of a fraction. Moreover, I have used the distance to 
+        ######ghost metric in a way which increase the evaluation function value.#######################################
+        
+        
+        
+##########################I have decided the coefficients by trail and error approach ##############################
+        subseq_value_of_score = successorGameState.getScore() #obtaining the score of the successor game state
         first_denominator = (adversary_closeness_metric + 11)
         second_denominator = (14 + closness_to_grid)
 
         initial_bool = (first_denominator > 0)
         second_bool = (second_denominator > 0)
         denominatorsNotZero = (initial_bool and second_bool)
+        ##########################I have decided the coefficients by trail and error approach ##############################
 
         if denominatorsNotZero:
             return 7 + 3 * (
@@ -174,7 +195,8 @@ class ReflexAgent(Agent):
                     35 * subseq_value_of_score - len(currentGameState.getCapsules())
             )
 
-        return -777
+        return -777 
+        ##############################
 
 
 def scoreEvaluationFunction(currentGameState: GameState):

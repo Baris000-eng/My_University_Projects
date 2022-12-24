@@ -140,12 +140,12 @@ def depthFirstSearch(problem):
 
 def breadthFirstSearch(problem):
     breadth_text = "Breadth based"
-    print(breadth_text)
+    print(breadth_text) # For code testing purposes
     name_of_searching_al = "BFS" 
-    print(name_of_searching_al)
+    print(name_of_searching_al)# For code testing purposes
     bre_res = basedOnBrdthOrDpth(name_of_searching_al,
                                  problem)  # calling basedOnBrdthOrDpth function with the BFS name. Passing the name of the search algorithm as BFS.
-    return bre_res
+    return bre_res # returning the breath or depth based result
 
 
 def uniformCostSearch(problem):

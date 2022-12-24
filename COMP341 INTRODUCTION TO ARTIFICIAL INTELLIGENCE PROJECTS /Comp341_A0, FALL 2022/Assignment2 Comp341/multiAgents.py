@@ -657,7 +657,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         for mvs in all_feasible_mvs: #going all along the legal moves
             renewed_situation = param_of_sit.generateSuccessor(param_of_ag, mvs) #generate successor
             total_amount_of_agents = param_of_sit.getNumAgents() #obtain the agent number
-            pacman_location = updated_dpth % total_amount_of_agents
+            pacman_location = updated_dpth % total_amount_of_agents #finding the location of the pacman as index.
             # self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag
             largerOrSmaller = self.lrgSmall(
                 val_of_alp=val_of_alpha,
@@ -665,41 +665,41 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 par_of_dpt=updated_dpth,
                 par_of_sit=renewed_situation,
                 par_of_ag=pacman_location
-            )
+            ) #obtaining the minimax value 
             if param_of_dpth > 0:
                 pass
             elif param_of_dpth < 0:
                 pass
-            else:
-                my_tuple_val = (mvs, largerOrSmaller)
+            else: #if the parameter of depth is initiialized to zero
+                my_tuple_val = (mvs, largerOrSmaller) 
                 global my_custom_array
                 my_custom_array.append(my_tuple_val)
 
             if largerOrSmaller == all_possible_vertices \
                     or \
-                    largerOrSmaller > all_possible_vertices:
-                all_possible_vertices = largerOrSmaller
+                    largerOrSmaller > all_possible_vertices: if the value is smaller than or equal to the minimax value
+                all_possible_vertices = largerOrSmaller #update value to minimax value
 
-            elif largerOrSmaller < all_possible_vertices:
-                pass
+            elif largerOrSmaller < all_possible_vertices: #if minimax value is less than the value.
+                pass #do nothing
 
-            beta_difference_value = (all_possible_vertices - val_of_beta)
+            beta_difference_value = (all_possible_vertices - val_of_beta) #which keeps the relation between the alpha value and value
             beta_diff_negative = (beta_difference_value < 0)
             beta_diff_zero = (beta_difference_value == 0)
-            if beta_diff_negative or beta_diff_zero:
-                pass
-            else:
-                return all_possible_vertices
+            if beta_diff_negative or beta_diff_zero: #if value is less than or equal to the value of beta
+                pass #do nothing
+            else:#if the beta value is smaller than value
+                return all_possible_vertices #return value
 
             alpha_difference_value = (all_possible_vertices - val_of_alpha)
-            alpha_diff_zero = (alpha_difference_value == 0)
-            alpha_diff_negative = (alpha_difference_value < 0)
-            if alpha_diff_zero or alpha_diff_negative:
-                pass
-            else:
-                val_of_alpha = all_possible_vertices
+            alpha_diff_zero = (alpha_difference_value == 0) #which will be checking whether alpha value is equal to value
+            alpha_diff_negative = (alpha_difference_value < 0) #which will be checking whether alpha value is smaller than value
+            if alpha_diff_zero or alpha_diff_negative: #if the value is smaller than or equal to alpha value
+                pass #do nothing, in other words, pass.
+            else: #if the value is greater than the alpha value
+                val_of_alpha = all_possible_vertices #assign the alpha value to value
 
-        return all_possible_vertices
+        return all_possible_vertices #return the value
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
@@ -874,16 +874,16 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         elif length_of_list_of_feasible_moves == 0:
             print("The list of all feasible moves is empty !")
 
-        for feasible_move in feasible_moves:
+        for feasible_move in feasible_moves: #going along all legal moves
             updated_situation = st.generateSuccessor(
                 ag,
                 feasible_move
-            )
+            ) #generating the successor
             value_large_or_value_small = self.largeOrSmall(
                 dp=updated_value_of_depth,
                 st=updated_situation,
                 ag=pacman_ind,
-            )
+            ) #obtaining the minimax value
 
             if dp < 0:
                 pass

@@ -77,17 +77,17 @@ def tinyMazeSearch(problem):
 def basedOnBrdthOrDpth(sNm, prob):
     upperVersion = sNm.upper()
     lowerVersion = sNm.lower()
-    lowerBfsStr = "bfs"
-    upperBfsStr = "BFS"
-    lowerDfsStr = "dfs"
-    upperDfsStr = "DFS"
+    lowerBfsStr = "bfs" #defining lower case bfs parameter
+    upperBfsStr = "BFS" #defining upper case bfs parameter
+    lowerDfsStr = "dfs" #defining lower case dfs parameter
+    upperDfsStr = "DFS" #defining upper case dfs parameter
 
     # If BFS algo
     if ((upperVersion.__eq__(upperBfsStr)) is True) or \
             ((lowerVersion.__eq__(lowerBfsStr)) is True):
         struct_of_search_algo = util.Queue()  # construct a queue by using util.py.
     else:
-        # If DFS algo
+        # If DFS algo, casefold is used for covering all types of DFS string parameters regardless of the case of the letters
         if ((sNm.casefold().__eq__(lowerDfsStr)) is not False) or \
                 ((sNm.casefold().__eq__(upperDfsStr)) is not False):
             from util import Stack

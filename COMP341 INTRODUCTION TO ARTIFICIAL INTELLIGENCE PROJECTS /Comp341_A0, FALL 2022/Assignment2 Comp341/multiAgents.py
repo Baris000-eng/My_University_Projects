@@ -432,6 +432,8 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
+        
+        ############All null checks for the parameters #################################
         if (gameState is None) \
                 or \
                 (self.index is None) \
@@ -439,6 +441,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 (self.depth is None):
             print("the game state, depth, or index is detected as none !!!")
             raise Exception("the game state, depth, or index is detected as none !!!")
+        ############All null checks for the parameters #################################
+        
+        
         value_of_deepness_metric = 0
         global my_custom_array
         my_custom_array = list()
@@ -447,8 +452,8 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
         # self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag #
 
-        value_of_beta_arg = +1 * inf
-        value_of_alpha_arg = -1 * inf
+        value_of_beta_arg = +1 * inf     #initializing the beta to the positive infinity
+        value_of_alpha_arg = -1 * inf    #initializing the alpha to the negative infinity
 
         largerOrSmallerNumber = self.bigger_val(
             val_of_alpha=value_of_alpha_arg,
@@ -459,18 +464,19 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         )
         my_lst = my_custom_array
 
-        for pairsOfMovesAndResults in my_lst:
-            move, result = pairsOfMovesAndResults
-            diff_value = largerOrSmallerNumber - result
-            neg = diff_value < 0
-            pos = diff_value > 0
+        for pairsOfMovesAndResults in my_lst: #going along all action and value tuples
+            move, result = pairsOfMovesAndResults #dividing each of the tuples into the action and value
+            diff_value = largerOrSmallerNumber - result #get the difference between minimax value and the value in one of these tuples
+            neg = diff_value < 0 #specifies the boolean where minimax value is smaller than the value in one of tuple
+            pos = diff_value > 0 #specifies the boolean where minimax value is greater than the value in one of tuple
             negativeOrPositive = (pos or neg)
-            if negativeOrPositive:
-                pass
-            else:
-                return move
+            if negativeOrPositive: #if the value part in a tuple is not equal to the minimax value
+                pass #continue
+            else:#if the value part in a tuple is equal to the minimax value
+                return move #return the corresponding move
 
     def smaller_val(self, value_of_alpha, value_of_beta, parameter_of_dpth, parameter_of_sit, parameter_of_ag):
+        ##############All null checks for the parameters of this function to make the code work in all cases####################
         if (self.index is None) \
                 or \
                 (self.depth is None) \
@@ -487,6 +493,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             print("one of the parameters is detected as null !!!!")
             print("an invalid parameter of the function called smaller val iis detected")
             raise Exception("one of the parameters is detected as null !!!!")
+        ##############All null checks for the parameters of this function to make the code work in all cases####################
+        
+        
         all_of_vertices = (+1) * (+ math.inf)
         updated_depth_param = parameter_of_dpth + 1
         all_feasible_moves = parameter_of_sit.getLegalActions(parameter_of_ag)

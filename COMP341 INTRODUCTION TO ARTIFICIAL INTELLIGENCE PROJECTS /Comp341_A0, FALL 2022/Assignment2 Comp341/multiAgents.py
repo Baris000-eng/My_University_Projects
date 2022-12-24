@@ -680,6 +680,8 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         "*** YOUR CODE HERE ***"
+        
+        ####doing null checks for the parameters ###############
         if (gameState is None) \
                 or \
                 (self.depth is None) \
@@ -687,13 +689,19 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 (self.index is None):
             print("Game state, depth, or index is None !!")
             raise Exception("Game state, depth, or index is None !!")
+        ####doing null checks for the parameters ###############
 
-        my_custom_stop_string = "Stop"
+        
+        
+        my_custom_stop_string = "Stop" #defining the stop move
         global my_custom_array
         my_custom_array = list()
-        larger_val_or_smaller_val = self.value_lrg(0, gameState, 0)
+        larger_val_or_smaller_val = self.value_lrg(0, gameState, 0) #calling the function which finds the max value.
         my_arr = my_custom_array
 
+        
+        
+        ######################## Null checks and empty checks for the my_arr ##################
         if my_arr is None:
             print("The list which keeps the move and outcome tuples is found as null !!")
             raise Exception("The list which keeps the move and outcome tuples is found as null !!")
@@ -703,23 +711,26 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         elif len(my_arr) == 0:
             print("The length of the list keeping move result tuples is zero !")
             print("The list keeping move result tuples is empty !")
-
-        for move_result_tuples in my_arr:
-            move, consequence = move_result_tuples
-            diff = larger_val_or_smaller_val - consequence
-            if diff < 0:
+        ######################## Null checks and empty checks for the my_arr ##################
+        
+        
+        
+        for move_result_tuples in my_arr: #going all along the action,value tuples 
+            move, consequence = move_result_tuples #dividing a tuple in the array into action and value where the action is first and value is second
+            diff = larger_val_or_smaller_val - consequence #it will be used for checking the relation between the value and the minimax value
+            if diff < 0: #if the minimax value is smaller than value
                 pass
-            elif diff > 0:
+            elif diff > 0:#if the minimax value is larger than value
                 pass
-            else:
+            else: #if the minimax value is equal to the value
                 string_equality_condition = (
                     move.lower().__eq__(
                         my_custom_stop_string.lower()
                     )
                 )
-                if string_equality_condition == True:
-                    pass
-                return move
+                if string_equality_condition == True: #if the move is equal to the 'stop' action regardless of its case
+                    pass #pass that case
+                return move #if the move is not equal to stop, than return that move
 
     @staticmethod
     def add_weighted_values(num1, num2):

@@ -212,38 +212,38 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     if prio_que_str is None:  # if the priority queue object is none
         print("Null priority queue error has been thrown !!")  # print a related message
         raise Exception("********* The priority queue instance is null !!!!!!!!! *******")  # throw a related exception
-    else:
+    else: #if the priority queue is not none
         all_agent_moves = list()
         first_sta = problem.getStartState()  # get the first state of problem
         if first_sta is None:  # control if that state is none
-            print("The initial state of the problem is null !")
-            raise Exception("!!! *** Null initial state is found !!! ****")
+            print("The initial state of the problem is null !") #if start state is none, print related message
+            raise Exception("!!! *** Null initial state is found !!! ****") #throw related exception
         trav = list()
         prio_value = 0
         fe = (first_sta, all_agent_moves)
         se = prio_value
         prio_que_str.push(fe, se)
         empty = prio_que_str.isEmpty()  # defining a boolean variable named empty to keep whether priority queue is empty.
-        if empty is True:
-            print("***** !!!! Empty priority queue object !!!! **** ")
+        if empty is True: #if the priority queue is empty
+            print("***** !!!! Empty priority queue object !!!! **** ") #print related message
         else:  # if the priority queue is not empty
             while empty is False:  # while the priority queue is not empty
                 situ, moves_of_agents = prio_que_str.pop()  # pop states and agent moves from that priority queue
-                if situ not in trav:
+                if situ not in trav: #if the current node is the in the traversed node list 
                     trav.append(situ)  # create a list of the nodes which have not been traversed yet.
                     aimStateReached = problem.isGoalState(
                         situ)  # defining a boolean variable (named aimStateReached) which keeps whether the goal situation is reached.
-                    if aimStateReached is not True:
-                        gg = 4
-                        # print("aim not reached yet !")
+                    if aimStateReached is not True: #if we have not reached the aimed state yet
+                        gg = 4 #do nothing
+                        # print("aim not reached yet !") #do nothing
                     else:
                         # print("aim is reached now !")
-                        return moves_of_agents
-                    subseq_lst = problem.getSuccessors(situ)  # extract successor elements
-                    for lst_elem in subseq_lst:
-                        subseq, mov, cst_of_mov = lst_elem
-                        he = heuristic(subseq, problem)
-                        if subseq in trav:
+                        return moves_of_agents #return the actions of the agent
+                    subseq_lst = problem.getSuccessors(situ)  # extract successor elements by using getSuccessors function
+                    for lst_elem in subseq_lst: #for all tuples existing in the successors list
+                        subseq, mov, cst_of_mov = lst_elem #divide tuple into state, action, cost triple
+                        he = heuristic(subseq, problem) #find the heuristic
+                        if subseq in trav: #if the su
                             my_tiny_lst = []
                             if my_tiny_lst is None:
                                 print("Null list error !")
@@ -255,10 +255,10 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                             from itertools import chain  # for utilizing chain under itertools library
                             mov_lst = list()  # creation of move list named mov_lst
                             mov_lst.append(mov)  # appending moves to mov_lst
-                            tot_cst = problem.getCostOfActions(moves_of_agents)  # extract the total cost of actions
+                            tot_cst = problem.getCostOfActions(moves_of_agents)  # extract the total cost of actions by using getCostOfActions() function.s
                             combined = chain(moves_of_agents, mov_lst)  # chain moves of agents to move list
                             altered_mov = list(combined)
-                            altered_cst = cst_of_mov + tot_cst
+                            altered_cst = cst_of_mov + tot_cst #add the cost of move to the total cost and obtain altered_cost
                             elem_zero = (subseq, altered_mov)
                             sec_elem = altered_cst
                             lis_with_heur = [he, sec_elem]

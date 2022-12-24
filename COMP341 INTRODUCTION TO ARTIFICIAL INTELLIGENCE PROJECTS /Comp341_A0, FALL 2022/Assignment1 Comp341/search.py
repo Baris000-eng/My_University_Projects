@@ -93,7 +93,7 @@ def basedOnBrdthOrDpth(sNm, prob):
             from util import Stack
             struct_of_search_algo = Stack()  # construct a stack by using util.py.
 
-    visNod = list() #initializing the list which represent the visite noded
+    visNod = list() #initializing the list which represent the visited nodes
     init_state = prob.getStartState()  # extraction of the initial problem state
     all_acts = list()
     pshed = (init_state, all_acts)

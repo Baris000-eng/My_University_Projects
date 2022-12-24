@@ -234,7 +234,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                         situ)  # defining a boolean variable (named aimStateReached) which keeps whether the goal situation is reached.
                     if aimStateReached is not True: #if we have not reached the aimed state yet
                         gg = 4 #do nothing
-                        # print("aim not reached yet !") #do nothing
+                        # print("aim not reached yet !") 
                     else:
                         # print("aim is reached now !")
                         return moves_of_agents #return the actions of the agent
@@ -242,7 +242,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                     for lst_elem in subseq_lst: #for all tuples existing in the successors list
                         subseq, mov, cst_of_mov = lst_elem #divide tuple into state, action, cost triple
                         he = heuristic(subseq, problem) #find the heuristic
-                        if subseq in trav: #if the su
+                        if subseq in trav: 
                             my_tiny_lst = []
                             if my_tiny_lst is None:
                                 print("Null list error !")
@@ -255,14 +255,14 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                             mov_lst = list()  # creation of move list named mov_lst
                             mov_lst.append(mov)  # appending moves to mov_lst
                             tot_cst = problem.getCostOfActions(moves_of_agents)  # extract the total cost of actions by using getCostOfActions() function.s
-                            combined = chain(moves_of_agents, mov_lst)  # chain moves of agents to move list
-                            altered_mov = list(combined)
+                            combined = chain(moves_of_agents, mov_lst)  # appending agent action to the agent moves
+                            altered_mov = list(combined) #converting the appended structure found above to a list by using list() conversion
                             altered_cst = cst_of_mov + tot_cst #add the cost of move to the total cost and obtain altered_cost
-                            elem_zero = (subseq, altered_mov)
-                            sec_elem = altered_cst
+                            elem_zero = (subseq, altered_mov) #defining the tuple made of successor state, updated list of moves, and updated cost
+                            sec_elem = altered_cst # updated cost (total cost plus the cost of the agent move)
                             lis_with_heur = [he, sec_elem] #create a list including the heuristic and (total cost plus cost of move)
-                            val_with_heur = sum(lis_with_heur)  # extract the summation of the heuristic and total cost and cost of move
-                            prio_que_str.push(elem_zero, val_with_heur) 
+                            val_with_heur = sum(lis_with_heur)  # extract the summation of the created list above this line
+                            prio_que_str.push(elem_zero, val_with_heur) #pushing             to the priority queue data structure
 
                 else: #For logging and code testing purposes
                     trav_lst = []

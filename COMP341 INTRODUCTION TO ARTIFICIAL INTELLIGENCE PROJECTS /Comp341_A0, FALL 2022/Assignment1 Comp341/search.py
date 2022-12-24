@@ -123,7 +123,7 @@ def basedOnBrdthOrDpth(sNm, prob):
                     secElm = ndd[1] #action
                     moveToLst.append(secElm) # obtaining the action as a list
                     concatenation = itertools.chain(actOfAg, moveToLst)  # for chaining agent actions with the actions in these iterations
-                    renewed_move_lst = list(concatenation)
+                    renewed_move_lst = list(concatenation) #converting the concatenation to list
                     iniElm = ndd[0] #representing new state
                     pushed_elem = (iniElm, renewed_move_lst) #creating a tuple where the first element is new state and the second element is the updated list of actions
                     struct_of_search_algo.push(pushed_elem) #push the created tuple to the initially created data structure which is queue or stack.
@@ -131,20 +131,20 @@ def basedOnBrdthOrDpth(sNm, prob):
 
 def depthFirstSearch(problem):
     depth_text = "Depth based"
-    print(depth_text)
+    print(depth_text) # For code testing purposes
     type_of_search = "DFS"
-    print(type_of_search)
-    dep_res = basedOnBrdthOrDpth(type_of_search, problem)  # calling basedOnBrdthOrDpth() function with the DFS name.
+    print(type_of_search)# For code testing purposes
+    dep_res = basedOnBrdthOrDpth(type_of_search, problem)  # calling basedOnBrdthOrDpth() function with the DFS name. Passing the name of the search algorithm as DFS.
     return dep_res
 
 
 def breadthFirstSearch(problem):
     breadth_text = "Breadth based"
     print(breadth_text)
-    name_of_searching_al = "BFS"
+    name_of_searching_al = "BFS" 
     print(name_of_searching_al)
     bre_res = basedOnBrdthOrDpth(name_of_searching_al,
-                                 problem)  # calling basedOnBrdthOrDpth function with the BFS name.
+                                 problem)  # calling basedOnBrdthOrDpth function with the BFS name. Passing the name of the search algorithm as BFS.
     return bre_res
 
 

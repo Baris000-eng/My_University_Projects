@@ -82,12 +82,13 @@ def basedOnBrdthOrDpth(sNm, prob):
     lowerDfsStr = "dfs" #defining lower case dfs parameter
     upperDfsStr = "DFS" #defining upper case dfs parameter
 
-    # If BFS algo
+    # If BFS algo regardless of the case of BFS parameter
     if ((upperVersion.__eq__(upperBfsStr)) is True) or \
             ((lowerVersion.__eq__(lowerBfsStr)) is True):
         struct_of_search_algo = util.Queue()  # construct a queue by using util.py.
     else:
-        # If DFS algo, casefold is used for covering all types of DFS string parameters regardless of the case of the letters
+        # If DFS algo regardless of the case of DFS parameter 
+        # casefold is used for covering all types of DFS string parameters regardless of the case of the letters
         if ((sNm.casefold().__eq__(lowerDfsStr)) is not False) or \
                 ((sNm.casefold().__eq__(upperDfsStr)) is not False):
             from util import Stack
@@ -99,7 +100,7 @@ def basedOnBrdthOrDpth(sNm, prob):
     pshed = (init_state, all_acts)
     struct_of_search_algo.push(pshed) #pushing the tuple which is made of the initial problem state and the initialized list of all actions
     #to the created data structure, which is stack or queue
-    emp = struct_of_search_algo.isEmpty()
+    emp = struct_of_search_algo.isEmpty() #defining a boolean called emp by using isEmpty() function. This represents the emptiness state of the data structure.
     if emp is True:  # checks whether the created data structure is empty.
         print("- !!! Empty structure !!! -") # displaying related message about emptiness of the data structure
         raise Exception("The structure instance is empty ")# raising a related exception
@@ -130,22 +131,22 @@ def basedOnBrdthOrDpth(sNm, prob):
 
 
 def depthFirstSearch(problem):
-    depth_text = "Depth based"
-    print(depth_text) # For code testing purposes
-    type_of_search = "DFS"
-    print(type_of_search)# For code testing purposes
+    depth_text = "Depth based" # For logging and code testing purposes
+    print(depth_text) # For logging and code testing purposes
+    type_of_search = "DFS" # For logging and code testing purposes
+    print(type_of_search)# For logging and code testing purposes
     dep_res = basedOnBrdthOrDpth(type_of_search, problem)  # calling basedOnBrdthOrDpth() function with the DFS name. Passing the name of the search algorithm as DFS.
-    return dep_res
+    return dep_res #returning the depth result named as dep_res
 
 
 def breadthFirstSearch(problem):
-    breadth_text = "Breadth based"
+    breadth_text = "Breadth based" # For logging and code testing purposes
     print(breadth_text) # For code testing purposes
-    name_of_searching_al = "BFS" 
+    name_of_searching_al = "BFS" # For logging and code testing purposes
     print(name_of_searching_al)# For code testing purposes
     bre_res = basedOnBrdthOrDpth(name_of_searching_al,
                                  problem)  # calling basedOnBrdthOrDpth function with the BFS name. Passing the name of the search algorithm as BFS.
-    return bre_res # returning the breath or depth based result
+    return bre_res # returning the breadth result named bre_res
 
 
 def uniformCostSearch(problem):
@@ -155,18 +156,18 @@ def uniformCostSearch(problem):
     if struct_of_prio_que is None:  # controls if the priority queue object is null
         print("Null priority queue error has been thrown !!")  # related printed message
         raise Exception("********* The priority queue instance is null !!!!!!!!! *******")  # related exception
-    else: #if priority queue is not none
+    else: #if the priority queue is not none
         all_moves_of_the_agent = list()
         ini_st = problem.getStartState()  # obtaining the initial state of the problem
         trav = list()
-        prio_num = 0
-        fir = (ini_st, all_moves_of_the_agent)
-        sec = prio_num
-        struct_of_prio_que.push(fir, sec)
+        prio_num = 0 #initialization of the cost
+        fir = (ini_st, all_moves_of_the_agent) #creating a tuple which keeps the start state as first element and the moves as the second element.
+        sec = prio_num #initialization of the cost
+        struct_of_prio_que.push(fir, sec) #pushing the 
         isPrioEmp = struct_of_prio_que.isEmpty()  # defining a boolean variable named isPrioEmp to check whether priority queue is empty.
         if isPrioEmp is True:  # check whether the priority queue instance is empty.
             print("***** !!!! Empty priority queue object !!!! **** ")
-        else:
+        else: # if the priority queue is not empty, in other words contains element
             while isPrioEmp is False:  # whenever the priority queue is not empty.
                 sit, moves_of_agents = struct_of_prio_que.pop()  # pop moves and states from that queue
                 if sit not in trav: #if the location is not traversed
@@ -219,8 +220,8 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             raise Exception("!!! *** Null initial state is found !!! ****") #throw related exception
         trav = list()
         prio_value = 0
-        fe = (first_sta, all_agent_moves)
-        se = prio_value
+        fe = (first_sta, all_agent_moves) #creating a tuple made of agent moves ve start state 
+        se = prio_value # 
         prio_que_str.push(fe, se)
         empty = prio_que_str.isEmpty()  # defining a boolean variable named empty to keep whether priority queue is empty.
         if empty is True: #if the priority queue is empty

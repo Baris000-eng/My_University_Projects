@@ -185,8 +185,7 @@ def uniformCostSearch(problem):
                             mov_lst = list()  # initialize a list called mov_lst
                             mov_lst.append(mov)  # append moves to the move list
                             from itertools import chain  # use the chain library
-                            tot_cst = problem.getCostOfActions(moves_of_agents)  # get the cost corresponding to the
-                            # actions
+                            tot_cst = problem.getCostOfActions(moves_of_agents)  # get the cost corresponding to the actions
                             merged = chain(moves_of_agents, mov_lst)  # merge moves_of_agents with move list
                             upd_mov = list(merged)  # convert to a list
                             upd_cst = cst_of_mov + tot_cst  # alter total cost of actions by the cost of a move
@@ -265,7 +264,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                             val_with_heur = sum(lis_with_heur)  # extract the summation of the heuristic and total cost and cost of move
                             prio_que_str.push(elem_zero, val_with_heur) 
 
-                else:
+                else: #For logging and code testing purposes
                     trav_lst = []
                     if trav_lst is None:
                         print("List is null !")

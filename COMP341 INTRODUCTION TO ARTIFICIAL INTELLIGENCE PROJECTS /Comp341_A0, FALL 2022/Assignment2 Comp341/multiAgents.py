@@ -406,14 +406,14 @@ class MinimaxAgent(MultiAgentSearchAgent):
 
         diff_at_most_zero = (diff_less_than_zero or diff_zero)
         depth_is_zero = (d == 0)
-        if win:
-            return self.evaluationFunction(s)
+        if win: #since the winning is the terminal state
+            return self.evaluationFunction(s) #evaluate the utility by calling the evaluationFunction()
         elif diff_at_most_zero:  # for dealing with the maximum recursion depth #
-            return self.evaluationFunction(s)
-        elif depth_is_zero:
-            return self.evaluationFunction(s)
-        elif lose:
-            return self.evaluationFunction(s)
+            return self.evaluationFunction(s) #evaluate the utility by calling the evaluationFunction()
+        elif depth_is_zero: #if the depth is more than the sum of all possible depths, namely the total number of pacmans times the depth.
+            return self.evaluationFunction(s) #evaluate the utility by calling the evaluationFunction()
+        elif lose: #one of the terminal states
+            return self.evaluationFunction(s)#evaluate the utility by calling the evaluationFunction()
         elif a > 0:
             return self.valSmallest(a, d, s)
         elif a < 0:
@@ -444,11 +444,11 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         ############All null checks for the parameters #################################
         
         
-        value_of_deepness_metric = 0
+        value_of_deepness_metric = 0 
         global my_custom_array
         my_custom_array = list()
         from math import inf
-        location_of_agent = 0
+        location_of_agent = 0 #initializing the location of the pacman agent.
 
         # self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag #
 
@@ -461,7 +461,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             param_of_dpth=value_of_deepness_metric,
             param_of_sit=gameState,
             param_of_ag=location_of_agent
-        )
+        ) #since we are trying to obtain most optimal action, call the function obtaining max value , namely bigger_val.
         my_lst = my_custom_array
 
         for pairsOfMovesAndResults in my_lst: #going along all action and value tuples
@@ -496,23 +496,30 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         ##############All null checks for the parameters of this function to make the code work in all cases####################
         
         
-        all_of_vertices = (+1) * (+ math.inf)
-        updated_depth_param = parameter_of_dpth + 1
-        all_feasible_moves = parameter_of_sit.getLegalActions(parameter_of_ag)
+        all_of_vertices = (+1) * (+ math.inf) #assigning the initial value to the plus infinity as in the lec nt.
+        updated_depth_param = parameter_of_dpth + 1 #for covering all locations from 0 to depth for the pacman agent.
+        all_feasible_moves = parameter_of_sit.getLegalActions(parameter_of_ag) #obtaining all possible legal actions
+        
+        ##################Null checks, empty checks, and edge case checks for dealing with all possible cases including also the internal python implementation changes ###
         if all_feasible_moves is None:
             print("the list of all feasible moves is null !!!")
             raise Exception("the list of all feasible moves is null !!!")
         elif len(all_feasible_moves) < 0:
             print("the length of the list of all feasible moves is invalid !!!!")
             raise Exception("the length of the list of all feasible moves is invalid !!!!")
-        for feasible_move in all_feasible_moves:
-            updated_sit = parameter_of_sit.generateSuccessor(parameter_of_ag, feasible_move)
-            total_number_of_pacmans = parameter_of_sit.getNumAgents()
+        ##################Null checks, empty checks, and edge case checks for dealing with all possible cases including also the internal python implementation changes ###
+        
+        
+        for feasible_move in all_feasible_moves: #going along all possible legal actions
+            updated_sit = parameter_of_sit.generateSuccessor(parameter_of_ag, feasible_move) #generating the successor
+            total_number_of_pacmans = parameter_of_sit.getNumAgents() # obtaining the number of agents
+            
+            ###############################Null checks, imaginary checks, and empty checks for dealing with all possible cases including also the internal python implementation changes ###
             if total_number_of_pacmans < 0 or \
                     total_number_of_pacmans == 0:
                 print("invalid number of pacmans found !")
                 raise Exception("invalid amount of pacmans !")
-            index_value_of_agent = updated_depth_param % total_number_of_pacmans
+            index_value_of_agent = updated_depth_param % total_number_of_pacmans#####obtaining the location of the pacman as index.
             if index_value_of_agent < 0 \
                     or \
                     index_value_of_agent > total_number_of_pacmans \
@@ -520,6 +527,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                     index_value_of_agent == total_number_of_pacmans:
                 print("the index value of the agent is invalid !!!")
                 raise Exception("the index value of the agent is invalid !!!")
+           ###############################Null checks, imaginary checks, and empty checks for dealing with all possible cases including also the internal python implementation changes ###
+        
+        
 
             # self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag
             mnmx_alg = self.lrgSmall(
@@ -528,32 +538,33 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 par_of_dpt=updated_depth_param,
                 par_of_sit=updated_sit,
                 par_of_ag=index_value_of_agent
-            )
+            ) #obtaining minimax value
 
-            value_of_diff = (mnmx_alg - all_of_vertices)
-            if value_of_diff > 0:
+            value_of_diff = (mnmx_alg - all_of_vertices) #obtaining the difference between minimax value and value initialized as minus infinity.
+            if value_of_diff > 0:#do nothing if minimax value is bigger than or equal to value, since they should be pruned (as in lecture)
                 pass
             else:
-                all_of_vertices = mnmx_alg
+                all_of_vertices = mnmx_alg #assigning the v value to the minimax value if minimax value is smaller (as in lecture)
 
             vertexMinusAlpha = (all_of_vertices - value_of_alpha)
             alphaDiffZeroOrMore = (vertexMinusAlpha > 0 or vertexMinusAlpha == 0)
             if alphaDiffZeroOrMore:
                 pass
-            else:
-                return all_of_vertices
+            else:  #if value smaller than alpha
+                return all_of_vertices #then return the value
 
             beta_diff = all_of_vertices - value_of_beta
             beta_diff_positive = (beta_diff > 0)
             beta_diff_zero = (beta_diff == 0)
-            if beta_diff_positive or beta_diff_zero:
+            if beta_diff_positive or beta_diff_zero:#if beta value is bigger than or equal to the v value, then do nothing. In other words, pass.
                 pass
             else:
-                value_of_beta = all_of_vertices
+                value_of_beta = all_of_vertices #if beta value is smaller than v value, then assign beta to the v value
 
-        return all_of_vertices
+        return all_of_vertices #return the value 
 
     def lrgSmall(self, val_of_alp, val_of_bet, par_of_dpt, par_of_sit, par_of_ag):
+        #######covering all possible null cases for dealing with the cases where the python implementer changes the internal implementation somehow or the function is called with edge case arguments
         if (self.index is None) \
                 or \
                 (self.depth is None) \
@@ -570,30 +581,37 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             print("one of the parameters of the function called lrg small is found as null !")
             print("An invalid parameter of the function called lrg small is detected !!")
             raise Exception("one of the parameters of the function called lrg small is found as null !")
-        total_number_of_pacmans = par_of_sit.getNumAgents()
+            
+         #######covering all possible null cases for dealing with the cases where the python implementer changes the internal implementation somehow or the function is called with edge case arguments
+        
+        
+        total_number_of_pacmans = par_of_sit.getNumAgents() #obtaining the total number of agents by using the getNumAgents() function
         wins = par_of_sit.isWin() #defining the winning case boolean variable
-        value_of_deepness = self.depth
+        value_of_deepness = self.depth #assigning self.depth to value_of_deepness
         loses = par_of_sit.isLose() #defining the losing case boolean variable
-        deepness_array = list()
-        deepness_array.append(total_number_of_pacmans)
-        deepness_array.append(value_of_deepness)
-        sum_of_deepness_values = math.prod(deepness_array)
-        difference_value = par_of_dpt - sum_of_deepness_values
-        if loses:
-            return self.evaluationFunction(par_of_sit)
-        elif difference_value > 0:
-            return self.evaluationFunction(par_of_sit)
-        elif difference_value == 0:
-            return self.evaluationFunction(par_of_sit)
-        elif wins:
-            return self.evaluationFunction(par_of_sit)
+        
+        
+        deepness_array = list() #creating an empty list which will keep total number of pacmans and self.depth
+        deepness_array.append(total_number_of_pacmans) #appending the total number of pacmans to that list
+        deepness_array.append(value_of_deepness)#appending the self.depth to that list
+        sum_of_deepness_values = math.prod(deepness_array) #multiplying the list elements with math.prod()
+        difference_value = par_of_dpt - sum_of_deepness_values #obtaining difference between depth parameter and the total depth value for all possible agents.
+        if loses: #since the loosing is a terminal state
+            return self.evaluationFunction(par_of_sit) #return the utility of the state
+        elif difference_value > 0:#if depth is bigger than the total depth value covering all agents
+            return self.evaluationFunction(par_of_sit)#return the utility of that situation
+        elif difference_value == 0: #if depth is equal to the total depth value covering all agents
+            return self.evaluationFunction(par_of_sit)#return the utility of that situation
+        elif wins:#since the winning is a terminal state
+            return self.evaluationFunction(par_of_sit)#return the utility of that state
+        
         agentLocPositive = (par_of_ag > 0)
         agentLocNegative = (par_of_ag < 0)
-        agentNotZero = (agentLocPositive or agentLocNegative)
-        if agentNotZero == True:
-            return self.smaller_val(val_of_alp, val_of_bet, par_of_dpt, par_of_sit, par_of_ag)
-        else:
-            return self.bigger_val(val_of_alp, val_of_bet, par_of_dpt, par_of_sit, par_of_ag)
+        agentNotZero = (agentLocPositive or agentLocNegative) #boolean variable defining whether the agent is min or max.
+        if agentNotZero == True: #when the agent is min
+            return self.smaller_val(val_of_alp, val_of_bet, par_of_dpt, par_of_sit, par_of_ag)#return the value of min value function
+        else: # max agent case, pacman location
+            return self.bigger_val(val_of_alp, val_of_bet, par_of_dpt, par_of_sit, par_of_ag) #return the value of max value function
 
     def bigger_val(self, val_of_alpha, val_of_beta, param_of_dpth, param_of_sit, param_of_ag):
         updated_dpth = (1 + param_of_dpth)

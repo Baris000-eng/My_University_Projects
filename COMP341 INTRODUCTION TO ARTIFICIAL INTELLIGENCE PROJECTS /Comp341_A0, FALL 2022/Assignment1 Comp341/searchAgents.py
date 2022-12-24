@@ -358,23 +358,23 @@ class CornersProblem(search.SearchProblem):
             "*** YOUR CODE HERE ***"
             ln = len(state)
             if state is None:  # checking whether the agent state object is none
-                print("Null State of the Agent !!!!")
-                raise Exception("Null Agent State !!!")
+                print("Null State of the Agent !!!!") #print a related message
+                raise Exception("Null Agent State !!!")#display a related exception
             elif ln <= 0:  # checking whether the agent state object is empty
-                print("Invalid or empty agent state")
-                raise Exception("Empty or invalid state of the  agent !!!")
+                print("Invalid or empty agent state")#print a related message
+                raise Exception("Empty or invalid state of the  agent !!!")#display a related exception
             all_possib_corns = state[1]
             coordinateValOfX, coordinateValOfY = state[0]
             vectoralXAlteration, vectoralYAlteration = Actions.directionToVector(
-                action)  # obtain the vector-based x change and vector-based y change
+                action)  # obtain the vector-based x change and vector-based y change by calling directionToVector function
             upd_x_val = coordinateValOfX + vectoralXAlteration  # change x by vectoral x change
             upd_y_val = coordinateValOfY + vectoralYAlteration  # alter y by vectoral y change
             upd_x_val = int(upd_x_val)  # convert x to int
             upd_y_val = int(upd_y_val)  # change y to int
             hitOccurs = self.walls[upd_x_val][
-                upd_y_val]  # defining a boolean variable named hitOccurs which keeps whether we hit the wall.
+                upd_y_val]  # defining a boolean variable named hitOccurs which keeps whether we hit the wall.In other words, it checks if wall contains updated coordinate tuple.
             if hitOccurs is True: #if hit is already occurred
-                ffff = 99 #do nothing
+                ffff = 99 #do nothing, may also be used 'pass' here
             else:  # if the hit does not occur
                 subseq_nd_vl = upd_x_val, upd_y_val #creating a tuple from the updated_x_value and updated_y_value
                 lst = list()
@@ -444,12 +444,15 @@ def cornersHeuristic(state, problem):
 
     noCost = 0
     noTrv = state[1]
+    
+    ##################Dealing with null cases andd empty cases for covering all possible test cases where null arguments are provided.
     if len(noTrv) <= 0:
         print("!!!!!!!!! **** No Element inside the non traversed path **** !!!!!!!!")
         return noCost
     elif noTrv is None:
         print("!! Null instance of the non traversed path is encountered !! *******")
         raise Exception("Null instance of the non-traversed path !!")
+    ##################Dealing with null cases andd empty cases for covering all possible test cases where null arguments are provided.
 
     lst = list()
     agentLoc = state[0]
@@ -458,19 +461,24 @@ def cornersHeuristic(state, problem):
                         agentLoc)  # calculating the manhattan distance from agent location to every single non-travsersed node.
         lst.append(dst)  # appending the calculated manhattan distance to a list.
 
+        
+   ##################Dealing with null cases andd empty cases for covering all possible test cases where null or empty arguments are provided.
     if len(lst) <= 0:
         print("No element in the distance list !!")
         return 0
     elif lst is None:
         print("Null instance of the distance list !! **")
         raise Exception("Null distance list instance !!")
+  ##################Dealing with null cases andd empty cases for covering all possible test cases where null or empty arguments are provided.
 
+   ####################Find the max ##############################################################
     mx = lst[0]  # assign the maximum element to the first element of the list called lst.
     length = len(lst)  # define the length of the list called lst
     for z in range(0, length):  # for going all along the length of the list called lst
         df = lst[z] - mx
         if df >= 0:  # if any element of lst is bigger than or equal to mx
             mx = lst[z]  # alter mx
+      ####################Find the max ##############################################################
     return mx  # return the value of mx
 
 
@@ -593,6 +601,7 @@ def pth_lng_mn(ini, ult, problem):
     )
 
     # handling the null cases for all the objects used in this question.
+    # this is for covering all possible test cases where null argument or parameter may also be provided ###
     if ult is None:
         print("Null last state !!!!")
         raise Exception("Null last state encountered !!")
@@ -610,7 +619,9 @@ def pth_lng_mn(ini, ult, problem):
     if astrSrch is None:
         print("** !! Null a star search instance is encountered !! ** ")
         raise Exception("Null instance of the a star search !! ** ")
-    return len(astrSrch)
+    # this is for covering all possible test cases where null argument or parameter may also be provided ###
+    
+    return len(astrSrch) #returning length of astar search list returned by search.aStarSearch().
 
 
 def foodHeuristic(state, problem):
@@ -693,11 +704,13 @@ class ClosestDotSearchAgent(SearchAgent):
         problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
-        my_srch = search.bfs(problem)  # calling bfs to find the path to the nearest dot.
+        my_srch = search.bfs(problem)  # calling bfs from search problems to find the path to the nearest dot.
+        
+        #Null check the null return case of search.bfs
         if my_srch is None:
             print("!!! ** Null object of the bfs search problem is found !!! ** ")
             raise Exception("Null problem")
-        return my_srch
+        return my_srch #return search.bfs() 's result.
 
 
 class AnyFoodSearchProblem(PositionSearchProblem):
@@ -747,7 +760,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
             print("Null food object or food list is found!")
         elif lf < 0 or lf == 0:
             print("Empty food object found!")
-        elif self.food[state[0]][state[1]] == True:  # checks if the goal is reached.
+        elif self.food[state[0]][state[1]] == True:  # checks if the goal is reached. In other words, checks whether the aimed state is in the food gridd.
             reachOccurs = True
         else:
             reachOccurs = False

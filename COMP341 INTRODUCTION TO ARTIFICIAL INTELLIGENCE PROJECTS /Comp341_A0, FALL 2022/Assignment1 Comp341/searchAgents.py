@@ -373,10 +373,10 @@ class CornersProblem(search.SearchProblem):
             upd_y_val = int(upd_y_val)  # change y to int
             hitOccurs = self.walls[upd_x_val][
                 upd_y_val]  # defining a boolean variable named hitOccurs which keeps whether we hit the wall.
-            if hitOccurs is True:
-                ffff = 99
+            if hitOccurs is True: #if hit is already occurred
+                ffff = 99 #do nothing
             else:  # if the hit does not occur
-                subseq_nd_vl = upd_x_val, upd_y_val
+                subseq_nd_vl = upd_x_val, upd_y_val #creating a tuple from the updated_x_value and updated_y_value
                 lst = list()
                 for crn in all_possib_corns:
                     if crn != subseq_nd_vl:  # when the current agent  location is not equal to a not-traversed node location.

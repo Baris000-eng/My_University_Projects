@@ -261,9 +261,9 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                             altered_cst = cst_of_mov + tot_cst #add the cost of move to the total cost and obtain altered_cost
                             elem_zero = (subseq, altered_mov)
                             sec_elem = altered_cst
-                            lis_with_heur = [he, sec_elem]
-                            val_with_heur = sum(lis_with_heur)  # extract the summation of the heuristic and cost
-                            prio_que_str.push(elem_zero, val_with_heur)
+                            lis_with_heur = [he, sec_elem] #create a list including the heuristic and (total cost plus cost of move)
+                            val_with_heur = sum(lis_with_heur)  # extract the summation of the heuristic and total cost and cost of move
+                            prio_que_str.push(elem_zero, val_with_heur) 
 
                 else:
                     trav_lst = []

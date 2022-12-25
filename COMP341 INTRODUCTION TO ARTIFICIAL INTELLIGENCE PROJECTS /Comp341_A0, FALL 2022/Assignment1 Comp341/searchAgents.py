@@ -319,7 +319,7 @@ class CornersProblem(search.SearchProblem):
         crnrs = (fir, sec, thi, lst)
         zeroth = self.startingPosition
         first = crnrs
-        return zeroth, first
+        return zeroth, first #returning the tuple made of starting position and the corners
 
     def isGoalState(self, state):
         glRch = False  # defining a boolean variable named glRch which will keep whether the aimed state is reached.
@@ -329,7 +329,7 @@ class CornersProblem(search.SearchProblem):
         if len(state) <= 0:  # for checking whether the state is empty
             print("Invalid or empty agent state is encountered !!! ********")
             raise Exception("!!!! Invalid or empty agent state !!!!")
-        all_possible_corners = state[1]
+        all_possible_corners = state[1] # obtaining the untraveled corners
         length = len(all_possible_corners)  # length of untraveled ones
         if length == 0:  # checks if the length of the list containing unvisited nodes is equal to 0
             glRch = True  # if that is the case, I have assigned the value of the boolean var called glRch to true
@@ -356,7 +356,7 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
-            ln = len(state)
+            ln = len(state) #obtaining length of the state
             if state is None:  # checking whether the agent state object is none
                 print("Null State of the Agent !!!!") #print a related message
                 raise Exception("Null Agent State !!!")#display a related exception
@@ -376,13 +376,13 @@ class CornersProblem(search.SearchProblem):
             if hitOccurs is True: #if hit is already occurred
                 ffff = 99 #do nothing, may also be used 'pass' here
             else:  # if the hit does not occur
-                subseq_nd_vl = upd_x_val, upd_y_val #creating a tuple from the updated_x_value and updated_y_value
-                lst = list()
-                for crn in all_possib_corns:
-                    if crn != subseq_nd_vl:  # when the current agent  location is not equal to a not-traversed node location.
-                        lst.append(crn)
+                subseq_nd_vl = upd_x_val, upd_y_val #creating a tuple from the updated_x_value and updated_y_value which as a whole indicating the next node
+                lst = list() #list for keeping the untraversed nodes
+                for crn in all_possib_corns: #going along all corners
+                    if crn != subseq_nd_vl:  # when the current agent location is not equal to the subsequent node location
+                        lst.append(crn) #append the location of agent to the list which keeps the untraversed corners
 
-                subseq_sit = subseq_nd_vl, lst
+                subseq_sit = subseq_nd_vl, lst #defining the next state as the next node in its first element and the unvisited corners as its second element.
                 cst = 1  # defining the cost to be 1
                 tup = subseq_sit, action, cst  # extracting cost, actions, successor state.
                 successors.append(
@@ -429,21 +429,27 @@ def heuManDis(q, w):
 
 
 def cornersHeuristic(state, problem):
+    
+    #Null checks done for dealing with all types of checks ########
     if problem is None:  # checks if the problem object is null
         print("Null problem instance !!")
         raise Exception("There is no search problem !!")
+   #Null checks done for dealing with all types of checks ########
 
     stLen = len(state)  # obtaining length of state
 
+    
+    #Null checks done for dealing with all types of checks , and test cases ########
     if state is None:
         print("Null agent state !!!")
         raise Exception("** Null Agent State **")
     elif stLen <= 0:  # checks if state is empty.
         print("*** !!! Empty or not valid agent state is encountered !!! ***")
         raise Exception("*** Empty or Not Valid State of the  Agent !!! *****")
+   #Null checks done for dealing with all types of checks , and test cases ########
 
     noCost = 0
-    noTrv = state[1]
+    noTrv = state[1] #unvisited corners
     
     ##################Dealing with null cases andd empty cases for covering all possible test cases where null arguments are provided.
     if len(noTrv) <= 0:
@@ -455,8 +461,8 @@ def cornersHeuristic(state, problem):
     ##################Dealing with null cases andd empty cases for covering all possible test cases where null arguments are provided.
 
     lst = list()
-    agentLoc = state[0]
-    for c in noTrv:
+    agentLoc = state[0] #position
+    for c in noTrv: # going along all of the unvisited corners in a for loop
         dst = heuManDis(c,
                         agentLoc)  # calculating the manhattan distance from agent location to every single non-travsersed node.
         lst.append(dst)  # appending the calculated manhattan distance to a list.
@@ -557,21 +563,21 @@ def obt_lrg(ls):
 
 
 def heu_manh(position, problem):
-    import math
-    aim_sit = problem.goal
+    import math #importing math library
+    aim_sit = problem.goal #defining the aimed situation by calling problem.goal.
     if aim_sit is None:  # checks whether the aim situation object is null
         print("** Aim State is null !! **")
         raise Exception("*** Null goal state ***")
     if len(aim_sit) == 0:  # checks whether the aim situation is empty
         print("Empty goal state is encountered !! ")
         raise Exception("*** Empty goal state ****")
-    my_loc_val = position
+    my_loc_val = position #### the agent position
     if my_loc_val is None:  # checks if the location of agent is null
-        print("*** Position object is null ***")
-        raise Exception("Null position !")
+        print("*** Position object is null ***") #print a related message
+        raise Exception("Null position !") #throw a related exception
     if len(my_loc_val) == 0:  # checks if the location of agent is empty
-        print("*** !!! Empty position is encountered !!! ***")
-        raise Exception("**** !! Empty position is encountered !! ****")
+        print("*** !!! Empty position is encountered !!! ***") #print a related message
+        raise Exception("**** !! Empty position is encountered !! ****") #throw a related exception
     df_sec = my_loc_val[1] - aim_sit[1]  # for calculating the difference between the y values
     df_fir = my_loc_val[0] - aim_sit[0]  # for calculating the difference between the x values
     if min(my_loc_val[1], aim_sit[1]) == my_loc_val[1]:  # if the minimum of y coordinate of the current location and y
@@ -584,6 +590,7 @@ def heu_manh(position, problem):
     return rslt_df  # return the found total difference
 
 
+####### to be used in the food heuristic function #######
 def pth_lng_mn(ini, ult, problem):
     psgs = problem.startingGameState  # extracting the initial state of the problem
     if psgs is None:  # if the first state of  the problem is none.
@@ -594,11 +601,12 @@ def pth_lng_mn(ini, ult, problem):
 
     individ_cst = 1  # defining a variable called individ_cst, and assigning it to 1. This variable will keep the step costs.
 
-    # creating an instance of the position search problem.
+    # creating an instance of the position search problem with necessary arguments in it.
     psp = PositionSearchProblem(
         problem.startingGameState, lambda vv: individ_cst,
         start=ini, goal=ult, warn=warPerm, visualize=visPerm
     )
+    # creating an instance of the position search problem with necessary arguments in it.
 
     # handling the null cases for all the objects used in this question.
     # this is for covering all possible test cases where null argument or parameter may also be provided ###
@@ -614,6 +622,8 @@ def pth_lng_mn(ini, ult, problem):
     if psp is None:
         print("this problem instance is null !!")
         raise Exception("null problem")
+     # handling the null cases for all the objects used in this question.
+    
     astrSrch = search.aStarSearch(psp,
                                   heu_manh)  # using an A* search by utilizing manhattan distance heuristic as the second argument.
     if astrSrch is None:
@@ -622,18 +632,22 @@ def pth_lng_mn(ini, ult, problem):
     # this is for covering all possible test cases where null argument or parameter may also be provided ###
     
     return len(astrSrch) #returning length of astar search list returned by search.aStarSearch().
+####### to be used in the food heuristic function #######
+
 
 
 def foodHeuristic(state, problem):
     # My extra code additions before the below section.
+    ################################Null checks done for dealing with all types of test cases########
     if state is None:
         print("The state of the problem is null")
         raise Exception("None problem state object !!! ")
     if problem is None:
         print("The problem is null")
         raise Exception("Null problem type!!! ")
+    ################################Null checks done for dealing with all types of test cases########
 
-    position, foodGrid = state
+    position, foodGrid = state #
 
     "*** YOUR CODE HERE ***"
     if position is None:  # checking if position of agent is null
@@ -737,7 +751,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
             raise Exception("*!*! Null instance of state *!*!")
         # the extra code I wrote before the comment named your code here
 
-        x, y = state
+        x, y = state #extracting the x and y coordinates in the state
 
         "*** YOUR CODE HERE ***"
 
@@ -761,9 +775,9 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         elif lf < 0 or lf == 0:
             print("Empty food object found!")
         elif self.food[state[0]][state[1]] == True:  # checks if the goal is reached. In other words, checks whether the aimed state is in the food gridd.
-            reachOccurs = True
+            reachOccurs = True  #then assign the reachOccurs boolean to true, since we reached the goal
         else:
-            reachOccurs = False
+            reachOccurs = False #otherwise, then assign the reachOccurs boolean to false, since we could not reach the goal
 
         return reachOccurs
 

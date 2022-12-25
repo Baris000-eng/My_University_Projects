@@ -159,11 +159,11 @@ def uniformCostSearch(problem):
     else: #if the priority queue is not none
         all_moves_of_the_agent = list()
         ini_st = problem.getStartState()  # obtaining the initial state of the problem
-        trav = list()
+        trav = list() #initialization of the list which will keep the traversed nodes
         prio_num = 0 #initialization of the cost
         fir = (ini_st, all_moves_of_the_agent) #creating a tuple which keeps the start state as first element and the moves as the second element.
         sec = prio_num #initialization of the cost
-        struct_of_prio_que.push(fir, sec) #pushing the 
+        struct_of_prio_que.push(fir, sec) #pushing the tuple made of start state, moves, and initialized cost
         isPrioEmp = struct_of_prio_que.isEmpty()  # defining a boolean variable named isPrioEmp to check whether priority queue is empty.
         if isPrioEmp is True:  # check whether the priority queue instance is empty.
             print("***** !!!! Empty priority queue object !!!! **** ")
@@ -251,7 +251,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                             my_tiny_lst.append(subseq)
                             my_tiny_lst.append(trav)
                             # print(my_tiny_lst)
-                        else:
+                        else: 
                             from itertools import chain  # for utilizing chain under itertools library
                             mov_lst = list()  # creation of move list named mov_lst
                             mov_lst.append(mov)  # appending moves to mov_lst

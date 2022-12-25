@@ -263,6 +263,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
+        ##################null handling for all possible test cases########
         pacman_posit = 0
         initial_value_of_depth = 0
         if gameState is None:
@@ -282,19 +283,21 @@ class MinimaxAgent(MultiAgentSearchAgent):
             raise Exception("invalid length of the list which keeps move types and results !")
         elif len(my_custom) == 0:
             print("Empty list detected !")
+        ##################null handling for all possible test cases########
 
-        for t in my_custom:
-            mv, res = t
+        for t in my_custom: #going along the list keeping the actions and values
+            mv, res = t #extracting action and value for each tuple in the list keeping the actions and values as tuples.
             diff_value = (lrg - res)
-            less = diff_value < 0
-            more = diff_value > 0
-            resulting = less or more
-            if resulting:
-                pass
-            else:
-                return mv
+            less = diff_value < 0 #keeping the cases where the minimax is less than value
+            more = diff_value > 0 #keeping the cases where the minimax is more than value
+            resulting = less or more #keeping the cases where the minimax is less than value or the cases where the minimax is more than value
+            if resulting: #if minimax value is not equal to the value in a tuple
+                pass #do nothing
+            else: #if minimax value is equal to the value in a tuple
+                return mv #then, return the moves
 
     def valLargest(self, ag, dp, st):
+        ###########################################Null handling for covering all possible test cases by even considderiing the inner implementation changes by Python implementer.
         if (ag is None) or \
                 (dp is None) or \
                 (st is None):
@@ -306,11 +309,13 @@ class MinimaxAgent(MultiAgentSearchAgent):
         if self.depth is None:
             print("Depth is found as null !")
             raise Exception("Depth is found as null !")
+        ###########################################Null handling for covering all possible test cases by even considderiing the inner implementation changes by Python implementer.
 
         renewed_depth = dp + 1
         from math import inf
-        set_of_all_vertices = inf * -1
-        all_moves = st.getLegalActions(ag)
+        set_of_all_vertices = inf * -1 #initializing the first value to the minus infinity
+        all_moves = st.getLegalActions(ag) #obtaining all legal actions by calling getLegalActions()
+        ###########################################Null handling for covering all possible test cases by even considderiing the inner implementation changes by Python implementer.
         if all_moves is None:
             print("all valid moves list is none !")
             raise Exception("all valid moves list is none !")
@@ -318,29 +323,31 @@ class MinimaxAgent(MultiAgentSearchAgent):
             print("invalid length for the all moves list!")
         elif len(all_moves) == 0:
             print("all moves list is detected as empty !!")
-        total_amount_of_pacman = st.getNumAgents()
-        index_value_of_pacman = renewed_depth % total_amount_of_pacman
-        for move in all_moves:
-            renewed_situation = st.generateSuccessor(ag, move)
-            smallValueOrBigValue = self.algo_sb(index_value_of_pacman, renewed_depth, renewed_situation)
+        ###########################################Null handling for covering all possible test cases by even considderiing the inner implementation changes by Python implementer.
+        total_amount_of_pacman = st.getNumAgents() #obtaining the total number of pacmans 
+        index_value_of_pacman = renewed_depth % total_amount_of_pacman #obtaining the location of the pacmans 
+        for move in all_moves: #going along all of the legal moves
+            renewed_situation = st.generateSuccessor(ag, move) #generate successor
+            smallValueOrBigValue = self.algo_sb(index_value_of_pacman, renewed_depth, renewed_situation) #call minimax function
             lessThanOrMoreThanZero = (dp < 0 or dp > 0)
-            if lessThanOrMoreThanZero:
+            if lessThanOrMoreThanZero: 
                 pass
-            else:
-                my_tuple_structure = (move, smallValueOrBigValue)
+            else: #if agent location
+                my_tuple_structure = (move, smallValueOrBigValue) #creating the tuple keeping the action and minimax value
                 global my_custom_array
-                my_custom_array.append(my_tuple_structure)
+                my_custom_array.append(my_tuple_structure) #appending the created tuple to the global list keeping actions and values
 
             bigger = (smallValueOrBigValue > set_of_all_vertices)
             equal = (smallValueOrBigValue == set_of_all_vertices)
             res_bool = (bigger or equal)
-            if res_bool:
-                set_of_all_vertices = smallValueOrBigValue
-
-        return set_of_all_vertices
+            if res_bool: #if the minimax value is bigger than or equal to the initial value v
+                set_of_all_vertices = smallValueOrBigValue #then assign the initial value to the v
+                
+        return set_of_all_vertices #return the initial value
 
     def valSmallest(self, pacman, distance, situ):
-        renewed_value_of_distance = distance + 1
+        renewed_value_of_distance = distance + 1 #for covering all possible cases for the pacman location (from 0 to depth) 
+        ##################null handling for covering all test cases #####
         if (pacman is None) or \
                 (distance is None) or \
                 (situ is None):
@@ -352,35 +359,40 @@ class MinimaxAgent(MultiAgentSearchAgent):
         if self.depth is None:
             print("depth is detected as null !")
             raise Exception("depth is found as null !")
+        ##################null handling for covering all test cases #####
+        
         from math import inf
         from math import prod
-        array_of_inf = []
-        array_of_inf.append(+1)
-        array_of_inf.append(+inf)
-        all_vertices = prod(array_of_inf)
-        valid_move_set = situ.getLegalActions(pacman)
+        array_of_inf = [] #creating a list which keeps the initial value
+        array_of_inf.append(+1) #append 1 to the list
+        array_of_inf.append(+inf) #append inf to the list 
+        all_vertices = prod(array_of_inf) #assigning the initial value to the multiplication of elements in array_of_inf, namely plus infinity.
+        valid_move_set = situ.getLegalActions(pacman) #obtaining the valid (legal) move set (actions)
+         ##################null handling for covering all test cases #####
         if valid_move_set is None:
             print("the set of valid moves is none !")
             raise Exception("the set of valid moves is none !")
         elif len(valid_move_set) < 0:
             print("invalid length found for the set of valid move set !")
             raise Exception("invalid length found for the set of valid move set !")
-        for particular_move in valid_move_set:
+         ##################null handling for covering all test cases #####
+        for particular_move in valid_move_set: #for each move in all legal actions
             renewedSituation = situ.generateSuccessor(pacman, particular_move)
-            pacmanNum = situ.getNumAgents()
-            pacman_loc = renewed_value_of_distance % pacmanNum
+            pacmanNum = situ.getNumAgents() #get the total number of pacmans
+            pacman_loc = renewed_value_of_distance % pacmanNum #obtain the location of pacman as index
             bigValOrSmallVal = self.algo_sb(pacman_loc, renewed_value_of_distance, renewedSituation)
-            lessCondition = (bigValOrSmallVal < all_vertices)
-            equalCondition = (bigValOrSmallVal == all_vertices)
-            verticesBigger = (lessCondition or equalCondition)
-            if verticesBigger:
-                all_vertices = self.algo_sb(pacman_loc, renewed_value_of_distance, renewedSituation)
-            else:
-                pass
+            lessCondition = (bigValOrSmallVal < all_vertices) #boolean covering the cases where minimax is smaller than initial value
+            equalCondition = (bigValOrSmallVal == all_vertices) #boolean covering the cases where minimax is equal to the initial value
+            verticesBigger = (lessCondition or equalCondition) #boolean covering the cases where minimax is smaller than or equal to the initial value
+            if verticesBigger: #if minimax is smaller than or equal to the initial value
+                all_vertices = self.algo_sb(pacman_loc, renewed_value_of_distance, renewedSituation) #assign the initial value to the value minimax value
+            else: #if minimax is bigger than the initial value
+                pass #do nothing
 
-        return all_vertices
+        return all_vertices #return the initial value
 
     def algo_sb(self, a, d, s):
+        ##################null handling for covering all test cases #####
         if (a is None) or \
                 (d is None) or \
                 (s is None):
@@ -390,19 +402,27 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 (self.depth is None):
             print("index or depth is null !!")
             raise Exception("index or depth is null !!")
+        ##################null handling for covering all test cases #####
 
-        total_num_of_pacmans = s.getNumAgents()
+        total_num_of_pacmans = s.getNumAgents() #obtaiining total number of pacmans 
+        
+        ##################null handling for covering all test cases #####
         if total_num_of_pacmans < 0 or \
                 total_num_of_pacmans == 0:
             print("invalid number of pacmans found !")
+       ##################null handling for covering all test cases #####
+    
+            
+       ###############Trial and error in depth limit imp##########################
         dpth = self.depth
-        depth_of_all = total_num_of_pacmans * dpth
+        depth_of_all = total_num_of_pacmans * dpth 
         win = s.isWin()
         lose = s.isLose()
         diff_value = depth_of_all - d
         isPacmanLoc = (a == 0)
         diff_zero = (diff_value == 0)
         diff_less_than_zero = (diff_value < 0)
+        ###############Trial and error in depth limit imp##########################
 
         diff_at_most_zero = (diff_less_than_zero or diff_zero)
         depth_is_zero = (d == 0)
@@ -414,12 +434,12 @@ class MinimaxAgent(MultiAgentSearchAgent):
             return self.evaluationFunction(s) #evaluate the utility by calling the evaluationFunction()
         elif lose: #one of the terminal states
             return self.evaluationFunction(s)#evaluate the utility by calling the evaluationFunction()
-        elif a > 0:
-            return self.valSmallest(a, d, s)
-        elif a < 0:
-            return self.valSmallest(a, d, s)
-        elif isPacmanLoc:
-            return self.valLargest(a, d, s)
+        elif a > 0: # min agent
+            return self.valSmallest(a, d, s) #min value
+        elif a < 0: #min agent
+            return self.valSmallest(a, d, s) #min value
+        elif isPacmanLoc: #max agent, namely pacman loc
+            return self.valLargest(a, d, s) #max value function call
 
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
@@ -842,10 +862,11 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
             raise Exception("One of the parameters of the function called value_lrg is null !!!!")
         from math import inf
         updated_value_of_depth = (1 + dp)
-        all_possible_vertices = (+ inf) * (-1)
-        total_pacman_number = st.getNumAgents()
-        feasible_moves = st.getLegalActions(ag)
-        if (feasible_moves is None) \
+        all_possible_vertices = (+ inf) * (-1) #assigning the initial value to minus infinity.
+        total_pacman_number = st.getNumAgents() #obtaining the total number of agents by calling getNumAgents() function.
+        feasible_moves = st.getLegalActions(ag) #obtaining the total number of agents by calling getLegalActions() function.
+        ######################Null handling and empty case handling for covering all possible test cases ####
+        if (feasible_moves is None) \ 
                 or \
                 (len(feasible_moves) < 0):
             print("Invalid list of feasible moves !!!")
@@ -854,8 +875,11 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         if len(feasible_moves) == 0:
             print("Empty list of feasible moves is found !")
             raise Exception("Empty list of feasible moves is found !")
+         ######################Null handling and empty case handling for covering all possible test cases ####
 
-        pacman_ind = updated_value_of_depth % total_pacman_number
+        pacman_ind = updated_value_of_depth % total_pacman_number #obtaining the location of pacman as index.
+        
+         ######################Null handling and empty case handling for covering all possible test cases ####
         if pacman_ind < 0 \
                 or \
                 pacman_ind > total_pacman_number \
@@ -873,6 +897,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
             raise Exception("Invalid length of the list of feasible moves !")
         elif length_of_list_of_feasible_moves == 0:
             print("The list of all feasible moves is empty !")
+        ######################Null handling and empty case handling for covering all possible test cases ####
 
         for feasible_move in feasible_moves: #going along all legal moves
             updated_situation = st.generateSuccessor(
@@ -893,23 +918,24 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 my_tup = (
                     feasible_move,
                     value_large_or_value_small
-                )
+                ) #create the tuple made of the action and minimax value.
                 global my_custom_array
                 my_custom_array.append(
                     my_tup
-                )
+                ) #appending to the global list keeping the actions and values
 
-            diff_vertex = (all_possible_vertices - value_large_or_value_small)
-            if diff_vertex > 0:
-                pass
-            elif diff_vertex == 0:
-                pass
-            else:
-                all_possible_vertices = value_large_or_value_small
+            diff_vertex = (all_possible_vertices - value_large_or_value_small) #obtaining the difference between the initial value and minimax value.
+            if diff_vertex > 0: #if the initial value bigger than minimax value
+                pass # do nothing
+            elif diff_vertex == 0: #if the initial value is equal to the minimax value
+                pass # do nothing
+            else: #if the initial value is smaller than the minimax value
+                all_possible_vertices = value_large_or_value_small #assign the initial value to the minimax value
 
-        return all_possible_vertices
+        return all_possible_vertices #return the initial value
 
     def largeOrSmall(self, dp, st, ag):
+        ##########Null checks done for covering all possible test cases #############
         if (self.depth is None) \
                 or \
                 (self.index is None) \
@@ -921,7 +947,9 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
                 (ag is None):
             print("One of the parameters of the function called value_lrg is null !!!!")
             raise Exception("One of the parameters of the function called value_lrg is null !!!!")
+         ##########Null checks done for covering all possible test cases #############
 
+        #########Trial and error approach and the help of Berkeley website instructions and the pdf description are used for depth limit #
         value_of_depth = self.depth
         if value_of_depth < 0:
             print("Invalid depth !")
@@ -934,6 +962,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         is_not_pacman_index = (
                 ag > 0 or ag < 0
         )
+         #########Trial and error approach and the help of Berkeley website instructions and the pdf description are used for depth limit #
 
         difference_dpth = dp - summmation_of_depths
         if pacman_fails == True:  # if pacman loses the game
@@ -946,18 +975,18 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
             return self.evaluationFunction(st)
         elif dp == 0:
             return self.evaluationFunction(st)
-        elif is_not_pacman_index == True:
+        elif is_not_pacman_index == True: #is not pacman location
             return self.summation_over_expected_probabilities(
                 d=dp,
                 a=ag,
                 s=st
-            )
-        elif is_pacman_index == True:
+            ) #calling expected value function
+        elif is_pacman_index == True: #pacman location
             return self.value_lrg(
                 dp=dp,
                 st=st,
                 ag=ag
-            )
+            ) #calling max value function
 
 
 def betterEvaluationFunction(currentGameState: GameState):

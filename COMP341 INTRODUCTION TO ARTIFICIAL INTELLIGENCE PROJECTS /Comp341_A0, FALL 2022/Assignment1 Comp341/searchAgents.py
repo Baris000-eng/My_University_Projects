@@ -363,8 +363,8 @@ class CornersProblem(search.SearchProblem):
             elif ln <= 0:  # checking whether the agent state object is empty
                 print("Invalid or empty agent state")#print a related message
                 raise Exception("Empty or invalid state of the  agent !!!")#display a related exception
-            all_possib_corns = state[1]
-            coordinateValOfX, coordinateValOfY = state[0]
+            all_possib_corns = state[1] # corners
+            coordinateValOfX, coordinateValOfY = state[0] #x coordinate and y coordinate
             vectoralXAlteration, vectoralYAlteration = Actions.directionToVector(
                 action)  # obtain the vector-based x change and vector-based y change by calling directionToVector function
             upd_x_val = coordinateValOfX + vectoralXAlteration  # change x by vectoral x change
